@@ -1,0 +1,833 @@
+{
+ "centre": {
+  "name": "Blaha Lujza tér (Erzsébet körút)",
+  "lat": 47.4967,
+  "lon": 19.0704
+ },
+ "places": [
+  {
+   "name": "Budapest I.",
+   "kind": "district",
+   "district": 1,
+   "roman": "I",
+   "lat": 47.49916,
+   "lon": 19.03514
+  },
+  {
+   "name": "Budapest II.",
+   "kind": "district",
+   "district": 2,
+   "roman": "II",
+   "lat": 47.53889,
+   "lon": 18.98264
+  },
+  {
+   "name": "Budapest III.",
+   "kind": "district",
+   "district": 3,
+   "roman": "III",
+   "lat": 47.56761,
+   "lon": 19.03678
+  },
+  {
+   "name": "Budapest IV.",
+   "kind": "district",
+   "district": 4,
+   "roman": "IV",
+   "lat": 47.57617,
+   "lon": 19.09551
+  },
+  {
+   "name": "Budapest V.",
+   "kind": "district",
+   "district": 5,
+   "roman": "V",
+   "lat": 47.49998,
+   "lon": 19.05053
+  },
+  {
+   "name": "Budapest VI.",
+   "kind": "district",
+   "district": 6,
+   "roman": "VI",
+   "lat": 47.50949,
+   "lon": 19.06532
+  },
+  {
+   "name": "Budapest VII.",
+   "kind": "district",
+   "district": 7,
+   "roman": "VII",
+   "lat": 47.5022,
+   "lon": 19.07515
+  },
+  {
+   "name": "Budapest VIII.",
+   "kind": "district",
+   "district": 8,
+   "roman": "VIII",
+   "lat": 47.4906,
+   "lon": 19.08734
+  },
+  {
+   "name": "Budapest IX.",
+   "kind": "district",
+   "district": 9,
+   "roman": "IX",
+   "lat": 47.46536,
+   "lon": 19.09036
+  },
+  {
+   "name": "Budapest X.",
+   "kind": "district",
+   "district": 10,
+   "roman": "X",
+   "lat": 47.48224,
+   "lon": 19.15649
+  },
+  {
+   "name": "Budapest XI.",
+   "kind": "district",
+   "district": 11,
+   "roman": "XI",
+   "lat": 47.46704,
+   "lon": 19.02746
+  },
+  {
+   "name": "Budapest XII.",
+   "kind": "district",
+   "district": 12,
+   "roman": "XII",
+   "lat": 47.50021,
+   "lon": 18.98559
+  },
+  {
+   "name": "Budapest XIII.",
+   "kind": "district",
+   "district": 13,
+   "roman": "XIII",
+   "lat": 47.5335,
+   "lon": 19.07062
+  },
+  {
+   "name": "Budapest XIV.",
+   "kind": "district",
+   "district": 14,
+   "roman": "XIV",
+   "lat": 47.51814,
+   "lon": 19.11386
+  },
+  {
+   "name": "Budapest XV.",
+   "kind": "district",
+   "district": 15,
+   "roman": "XV",
+   "lat": 47.55893,
+   "lon": 19.13821
+  },
+  {
+   "name": "Budapest XVI.",
+   "kind": "district",
+   "district": 16,
+   "roman": "XVI",
+   "lat": 47.51831,
+   "lon": 19.20437
+  },
+  {
+   "name": "Budapest XVII.",
+   "kind": "district",
+   "district": 17,
+   "roman": "XVII",
+   "lat": 47.48972,
+   "lon": 19.28366
+  },
+  {
+   "name": "Budapest XVIII.",
+   "kind": "district",
+   "district": 18,
+   "roman": "XVIII",
+   "lat": 47.43033,
+   "lon": 19.20186
+  },
+  {
+   "name": "Budapest XIX.",
+   "kind": "district",
+   "district": 19,
+   "roman": "XIX",
+   "lat": 47.44933,
+   "lon": 19.14412
+  },
+  {
+   "name": "Budapest XX.",
+   "kind": "district",
+   "district": 20,
+   "roman": "XX",
+   "lat": 47.4334,
+   "lon": 19.12092
+  },
+  {
+   "name": "Budapest XXI.",
+   "kind": "district",
+   "district": 21,
+   "roman": "XXI",
+   "lat": 47.42562,
+   "lon": 19.07037
+  },
+  {
+   "name": "Budapest XXII.",
+   "kind": "district",
+   "district": 22,
+   "roman": "XXII",
+   "lat": 47.41179,
+   "lon": 19.01083
+  },
+  {
+   "name": "Budapest XXIII.",
+   "kind": "district",
+   "district": 23,
+   "roman": "XXIII",
+   "lat": 47.3894,
+   "lon": 19.14416
+  },
+  {
+   "name": "Alsónémedi",
+   "kind": "agglomeration",
+   "lat": 47.31374,
+   "lon": 19.16646,
+   "pop": 5617,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Biatorbágy",
+   "kind": "agglomeration",
+   "lat": 47.47417,
+   "lon": 18.82361,
+   "pop": 15680,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Budajenő",
+   "kind": "agglomeration",
+   "lat": 47.55,
+   "lon": 18.8,
+   "pop": 2778,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Budakalász",
+   "kind": "agglomeration",
+   "lat": 47.62153,
+   "lon": 19.04596,
+   "pop": 12193,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Budakeszi",
+   "kind": "agglomeration",
+   "lat": 47.51111,
+   "lon": 18.93,
+   "pop": 15955,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Budaörs",
+   "kind": "agglomeration",
+   "lat": 47.46056,
+   "lon": 18.95778,
+   "pop": 29237,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Csobánka",
+   "kind": "agglomeration",
+   "lat": 47.64247,
+   "lon": 18.96781,
+   "pop": 3662,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Csomád",
+   "kind": "agglomeration",
+   "lat": 47.66667,
+   "lon": 19.23333,
+   "pop": 1861,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Csömör",
+   "kind": "agglomeration",
+   "lat": 47.54667,
+   "lon": 19.22444,
+   "pop": 10144,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Csörög",
+   "kind": "agglomeration",
+   "lat": 47.73141,
+   "lon": 19.2029,
+   "pop": 2038,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Diósd",
+   "kind": "agglomeration",
+   "lat": 47.40417,
+   "lon": 18.94583,
+   "pop": 11780,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Dunabogdány",
+   "kind": "agglomeration",
+   "lat": 47.79441,
+   "lon": 19.02944,
+   "pop": 3232,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Dunaharaszti",
+   "kind": "agglomeration",
+   "lat": 47.35528,
+   "lon": 19.08444,
+   "pop": 23772,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Dunakeszi",
+   "kind": "agglomeration",
+   "lat": 47.62972,
+   "lon": 19.13806,
+   "pop": 42328,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Dunavarsány",
+   "kind": "agglomeration",
+   "lat": 47.28278,
+   "lon": 19.06611,
+   "pop": 9061,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Délegyháza",
+   "kind": "agglomeration",
+   "lat": 47.25,
+   "lon": 19.06667,
+   "pop": 6137,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Ecser",
+   "kind": "agglomeration",
+   "lat": 47.44437,
+   "lon": 19.32605,
+   "pop": 4147,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Erdőkertes",
+   "kind": "agglomeration",
+   "lat": 47.67491,
+   "lon": 19.31583,
+   "pop": 10068,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Felsőpakony",
+   "kind": "agglomeration",
+   "lat": 47.34329,
+   "lon": 19.23927,
+   "pop": 3748,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Fót",
+   "kind": "agglomeration",
+   "lat": 47.60917,
+   "lon": 19.19278,
+   "pop": 20865,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Gyál",
+   "kind": "agglomeration",
+   "lat": 47.38222,
+   "lon": 19.21361,
+   "pop": 24078,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Gyömrő",
+   "kind": "agglomeration",
+   "lat": 47.42234,
+   "lon": 19.3945,
+   "pop": 20403,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Göd",
+   "kind": "agglomeration",
+   "lat": 47.69056,
+   "lon": 19.13444,
+   "pop": 21826,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Gödöllő",
+   "kind": "agglomeration",
+   "lat": 47.6,
+   "lon": 19.36667,
+   "pop": 32357,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Halásztelek",
+   "kind": "agglomeration",
+   "lat": 47.36083,
+   "lon": 18.98778,
+   "pop": 12186,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Herceghalom",
+   "kind": "agglomeration",
+   "lat": 47.5,
+   "lon": 18.75,
+   "pop": 2818,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Isaszeg",
+   "kind": "agglomeration",
+   "lat": 47.53333,
+   "lon": 19.4,
+   "pop": 11482,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Kerepes",
+   "kind": "agglomeration",
+   "lat": 47.56634,
+   "lon": 19.27629,
+   "pop": 11262,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Kisoroszi",
+   "kind": "agglomeration",
+   "lat": 47.80784,
+   "lon": 19.01064,
+   "pop": 920,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Kistarcsa",
+   "kind": "agglomeration",
+   "lat": 47.54778,
+   "lon": 19.26333,
+   "pop": 13527,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Leányfalu",
+   "kind": "agglomeration",
+   "lat": 47.72667,
+   "lon": 19.08944,
+   "pop": 4096,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Maglód",
+   "kind": "agglomeration",
+   "lat": 47.44389,
+   "lon": 19.3525,
+   "pop": 12260,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Majosháza",
+   "kind": "agglomeration",
+   "lat": 47.26238,
+   "lon": 19.00153,
+   "pop": 1710,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Mogyoród",
+   "kind": "agglomeration",
+   "lat": 47.6,
+   "lon": 19.25,
+   "pop": 8478,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Nagykovácsi",
+   "kind": "agglomeration",
+   "lat": 47.58,
+   "lon": 18.88,
+   "pop": 8790,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Nagytarcsa",
+   "kind": "agglomeration",
+   "lat": 47.52584,
+   "lon": 19.2862,
+   "pop": 6741,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Perbál",
+   "kind": "agglomeration",
+   "lat": 47.59135,
+   "lon": 18.75995,
+   "pop": 2167,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Pilisborosjenő",
+   "kind": "agglomeration",
+   "lat": 47.60601,
+   "lon": 18.99195,
+   "pop": 4426,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Piliscsaba",
+   "kind": "agglomeration",
+   "lat": 47.63363,
+   "lon": 18.82686,
+   "pop": 8601,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Pilisjászfalu",
+   "kind": "agglomeration",
+   "lat": 47.65472,
+   "lon": 18.79528,
+   "pop": 2210,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Pilisszentiván",
+   "kind": "agglomeration",
+   "lat": 47.61667,
+   "lon": 18.9,
+   "pop": 4230,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Pilisszentkereszt",
+   "kind": "agglomeration",
+   "lat": 47.7,
+   "lon": 18.9,
+   "pop": 2183,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Pilisszentlászló",
+   "kind": "agglomeration",
+   "lat": 47.71667,
+   "lon": 18.98869,
+   "pop": 1282,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Pilisszántó",
+   "kind": "agglomeration",
+   "lat": 47.66667,
+   "lon": 18.9,
+   "pop": 2725,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Pilisvörösvár",
+   "kind": "agglomeration",
+   "lat": 47.62111,
+   "lon": 18.91083,
+   "pop": 14600,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Pomáz",
+   "kind": "agglomeration",
+   "lat": 47.64722,
+   "lon": 19.02694,
+   "pop": 18205,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Pusztazámor",
+   "kind": "agglomeration",
+   "lat": 47.40292,
+   "lon": 18.78263,
+   "pop": 1214,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Páty",
+   "kind": "agglomeration",
+   "lat": 47.51667,
+   "lon": 18.83333,
+   "pop": 8842,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Pécel",
+   "kind": "agglomeration",
+   "lat": 47.49111,
+   "lon": 19.34194,
+   "pop": 17389,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Pócsmegyer",
+   "kind": "agglomeration",
+   "lat": 47.71667,
+   "lon": 19.1,
+   "pop": 2881,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Remeteszőlős",
+   "kind": "agglomeration",
+   "lat": 47.56009,
+   "lon": 18.91895,
+   "pop": 1048,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Solymár",
+   "kind": "agglomeration",
+   "lat": 47.591,
+   "lon": 18.929,
+   "pop": 11056,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Szada",
+   "kind": "agglomeration",
+   "lat": 47.63333,
+   "lon": 19.31667,
+   "pop": 6735,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Szentendre",
+   "kind": "agglomeration",
+   "lat": 47.67333,
+   "lon": 19.0725,
+   "pop": 28433,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Szigethalom",
+   "kind": "agglomeration",
+   "lat": 47.32278,
+   "lon": 19.01278,
+   "pop": 18392,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Szigetmonostor",
+   "kind": "agglomeration",
+   "lat": 47.68333,
+   "lon": 19.11667,
+   "pop": 3042,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Szigetszentmiklós",
+   "kind": "agglomeration",
+   "lat": 47.34528,
+   "lon": 19.04833,
+   "pop": 40126,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Százhalombatta",
+   "kind": "agglomeration",
+   "lat": 47.31667,
+   "lon": 18.91139,
+   "pop": 18239,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Sződ",
+   "kind": "agglomeration",
+   "lat": 47.71667,
+   "lon": 19.2,
+   "pop": 3455,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Sződliget",
+   "kind": "agglomeration",
+   "lat": 47.73333,
+   "lon": 19.15,
+   "pop": 4957,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Sóskút",
+   "kind": "agglomeration",
+   "lat": 47.40626,
+   "lon": 18.82849,
+   "pop": 3774,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Tahitótfalu",
+   "kind": "agglomeration",
+   "lat": 47.75225,
+   "lon": 19.07808,
+   "pop": 6269,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Taksony",
+   "kind": "agglomeration",
+   "lat": 47.33189,
+   "lon": 19.06311,
+   "pop": 6905,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Telki",
+   "kind": "agglomeration",
+   "lat": 47.55,
+   "lon": 18.83333,
+   "pop": 4483,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Tinnye",
+   "kind": "agglomeration",
+   "lat": 47.61667,
+   "lon": 18.78333,
+   "pop": 1974,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Tárnok",
+   "kind": "agglomeration",
+   "lat": 47.35966,
+   "lon": 18.85855,
+   "pop": 10751,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Tök",
+   "kind": "agglomeration",
+   "lat": 47.56667,
+   "lon": 18.73333,
+   "pop": 1618,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Tököl",
+   "kind": "agglomeration",
+   "lat": 47.32194,
+   "lon": 18.96194,
+   "pop": 11254,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Törökbálint",
+   "kind": "agglomeration",
+   "lat": 47.43556,
+   "lon": 18.91556,
+   "pop": 14937,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Vecsés",
+   "kind": "agglomeration",
+   "lat": 47.41083,
+   "lon": 19.27222,
+   "pop": 21279,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Veresegyház",
+   "kind": "agglomeration",
+   "lat": 47.65694,
+   "lon": 19.28472,
+   "pop": 21314,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Visegrád",
+   "kind": "agglomeration",
+   "lat": 47.78578,
+   "lon": 18.97024,
+   "pop": 1722,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Vác",
+   "kind": "agglomeration",
+   "lat": 47.77528,
+   "lon": 19.13111,
+   "pop": 33646,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Vácrátót",
+   "kind": "agglomeration",
+   "lat": 47.7109,
+   "lon": 19.2353,
+   "pop": 2792,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Zsámbék",
+   "kind": "agglomeration",
+   "lat": 47.54833,
+   "lon": 18.71861,
+   "pop": 5873,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Érd",
+   "kind": "agglomeration",
+   "lat": 47.37833,
+   "lon": 18.92194,
+   "pop": 71613,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Ócsa",
+   "kind": "agglomeration",
+   "lat": 47.29333,
+   "lon": 19.22583,
+   "pop": 9957,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Üllő",
+   "kind": "agglomeration",
+   "lat": 47.38417,
+   "lon": 19.34444,
+   "pop": 12836,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Üröm",
+   "kind": "agglomeration",
+   "lat": 47.6,
+   "lon": 19.01667,
+   "pop": 8415,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Őrbottyán",
+   "kind": "agglomeration",
+   "lat": 47.68721,
+   "lon": 19.28323,
+   "pop": 8447,
+   "jofogas_county": "pest"
+  }
+ ]
+}

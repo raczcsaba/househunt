@@ -1,0 +1,51 @@
+# Listing sources, no code needed. Copy to config/sources.toml and edit.
+# (Or skip this file and set SOURCE_URLS in .env to one or more search URLs.)
+#
+# For every source househunt:
+#   * reads robots.txt and never requests a URL it disallows,
+#   * identifies itself honestly (househunt + your CONTACT_EMAIL) and waits between requests,
+#   * stops that source for the run if the site shows a bot check or answers 401/403/429,
+#   * stores only facts about the house plus the link, never seller names or phone numbers.
+# Check each site's terms of use before adding it; many property portals forbid automated
+# collection even when robots.txt allows it. Personal, non-commercial use only.
+#
+# How listings are recognised on a page (extract = "auto" tries these in order):
+#   jsonld     schema.org data in the page (what search engines read)
+#   embedded   the JSON most modern sites embed (__NEXT_DATA__, __NUXT__, window.__STATE__ ...)
+#   selectors  CSS selectors you give below
+#   claude     Claude reads the page text (needs ANTHROPIC_API_KEY; costs a little per page)
+# Try a URL first with:  docker compose exec househunt python -m app.main probe "<url>"
+
+[[source]]
+name = "example"                 # short id, stored with each listing
+label = "Example Realty"         # shown on the dashboard
+# One search per town: {town} (URL-encoded name), {town_slug} (e.g. budaors), {district} (11),
+# {district_roman} (xi). Without a town placeholder the URL is one area-wide search, and each
+# listing is matched to one of your towns by its address.
+url = "https://www.example-realty.hu/elado-haz/{town_slug}?page={page}"
+enabled = false                  # this is a placeholder; set true for a real site
+max_pages = 20                   # results pages per town at most ({page} counts up from first_page)
+first_page = 1
+delay = 5                        # seconds between requests to this site (minimum 1.5)
+# render = "browser"             # for pages that only show listings after JavaScript runs (headless Chromium)
+# details = true                 # also open each new listing once for its map pin and full ad text
+# extract = "auto"               # or force one method: "jsonld", "embedded", "selectors", "claude"
+# claude = true                  # allow the Claude step for this source
+# claude_pages_per_run = 40      # cap on pages sent to Claude per run
+# item_url = "https://www.example-realty.hu/hirdetes/{id}"   # when the page data has ids but no links
+
+# Only needed when the site has neither structured nor embedded data:
+# [source.selectors]
+# item  = "article.listing-card"     # one element per listing
+# url   = "a@href"                   # "css@attribute", or just "css" for the element's text
+# title = "h2"
+# price = ".price"
+# size  = ".area"
+# plot  = ".plot"
+# rooms = ".rooms"
+# address = ".location"
+
+# An area-wide search, matched to towns by address:
+# [[source]]
+# name = "another"
+# url = "https://www.another-site.hu/search?type=house&region=pest&p={page}"

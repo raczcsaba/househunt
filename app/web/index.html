@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Commuter House Search</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one reading column. Status strip, town board, then the filterable house list. */
+:root {
+  --bg: #f3f5f4; --surface: #ffffff; --fg: #17211d; --muted: #5b6863; --line: #d9e0dd;
+  --accent: #0f6b4f; --accent-soft: #e1efe9; --night: #1d2a4a; --night-fg: #ffd36b;
+  --warn: #9a5b00; --warn-soft: #fbefd9; --new: #1f5fbf; --new-soft: #e3ecfb; --gone: #8a3030; --gone-soft: #f6e3e3;
+  --display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101614; --surface: #17201d; --fg: #e6ece9; --muted: #9aa8a2; --line: #2a3632;
+    --accent: #5cc79f; --accent-soft: #173229; --night: #0b1222; --night-fg: #ffd36b;
+    --warn: #f0b45a; --warn-soft: #34270f; --new: #8fb6ff; --new-soft: #17243d; --gone: #f09a9a; --gone-soft: #3a1c1c;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 56px;
+}
+.wrap { max-width: 1280px; margin: 0 auto; display: grid; gap: 32px; }
+h1, h2 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: .01em; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; line-height: 1.05; }
+h2 { font-size: 1.6rem; font-weight: 600; }
+p { margin: 0; max-width: 72ch; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lede { color: var(--muted); }
+header { display: grid; gap: 10px; }
+.eyebrow { font-family: var(--display); text-transform: uppercase; letter-spacing: .12em; font-size: .85rem; color: var(--accent); font-weight: 600; }
+section { display: grid; gap: 14px; min-width: 0; }
+.stats { display: flex; flex-wrap: wrap; gap: 10px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 10px 14px; display: grid; min-width: 120px; }
+.stat b { font-family: var(--display); font-size: 1.6rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); font-size: .85rem; }
+.stat button { all: unset; cursor: pointer; display: grid; }
+.errors { color: var(--warn); font-size: .9rem; }
+.scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; white-space: nowrap; }
+th { font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; font-size: .82rem; color: var(--muted); background: var(--surface); }
+td.wrapcell { white-space: normal; min-width: 240px; }
+tr:last-child td { border-bottom: 0; }
+tr.gone td { opacity: .6; }
+.num { text-align: right; }
+.town-btn { font: inherit; font-weight: 700; color: var(--fg); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+.town-btn:hover { text-decoration-color: var(--accent); }
+.city, .sub { font-size: .78rem; color: var(--muted); display: block; }
+.board { display: flex; flex-wrap: wrap; gap: 4px; }
+.dep { font-family: var(--mono); font-size: .8rem; background: var(--night); color: var(--night-fg); padding: 2px 6px; border-radius: 3px; }
+.pill { display: inline-block; font-size: .74rem; font-weight: 700; padding: 1px 7px; border-radius: 99px; margin: 1px 2px 1px 0; }
+.pill.ok { background: var(--accent-soft); color: var(--accent); }
+.pill.warn { background: var(--warn-soft); color: var(--warn); }
+.pill.new { background: var(--new-soft); color: var(--new); }
+.pill.gone { background: var(--gone-soft); color: var(--gone); }
+.controls { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: end; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; }
+.field { display: grid; gap: 4px; }
+.field > label, .flabel { font-size: .74rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+select, input[type="number"] { font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); color: var(--fg); min-width: 0; }
+input[type="number"] { width: 96px; }
+.check { display: flex; gap: 6px; align-items: center; font-size: .92rem; }
+.count { margin-left: auto; font-family: var(--display); font-size: 1.15rem; font-weight: 600; }
+.reset { font: inherit; font-size: .85rem; padding: 5px 10px; border-radius: 4px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; }
+.multi { position: relative; }
+.multi summary { list-style: none; cursor: pointer; padding: 6px 28px 6px 8px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); min-width: 170px; max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; position: relative; }
+.multi summary::-webkit-details-marker { display: none; }
+.multi summary::after { content: "▾"; position: absolute; right: 9px; top: 6px; color: var(--muted); }
+.multi-panel { position: absolute; z-index: 5; top: calc(100% + 4px); left: 0; width: min(300px, calc(100vw - 32px)); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 8px 24px rgb(0 0 0 / .14); padding: 10px; display: grid; gap: 8px; }
+.multi-actions { display: flex; gap: 8px; }
+.multi-actions button { font: inherit; font-size: .85rem; padding: 3px 10px; border-radius: 4px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; }
+.multi-list { max-height: 320px; overflow-y: auto; display: grid; gap: 2px; }
+.multi-list label { display: flex; gap: 8px; align-items: center; padding: 3px 4px; border-radius: 3px; font-size: .92rem; cursor: pointer; }
+.multi-list label:hover { background: var(--accent-soft); }
+.multi-list .grp { font-family: var(--display); text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; color: var(--accent); font-weight: 600; padding: 6px 4px 2px; }
+.multi-list small { color: var(--muted); margin-left: auto; }
+.loc { font-size: .74rem; color: var(--muted); display: block; }
+.loc.weak { color: var(--warn); }
+.links a { margin-right: 8px; white-space: nowrap; font-size: .9rem; }
+.links a.dead { color: var(--muted); text-decoration: line-through; }
+.title { display: block; max-width: 40ch; }
+.drop { color: var(--accent); font-size: .78rem; display: block; }
+.more { display: flex; justify-content: center; }
+.more button { font: inherit; font-weight: 600; padding: 8px 18px; border-radius: 4px; border: 1px solid var(--accent); background: var(--accent-soft); color: var(--accent); cursor: pointer; }
+.empty { padding: 32px 16px; color: var(--muted); }
+.banner { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; background: var(--warn-soft); color: var(--fg); border: 1px solid var(--warn); border-radius: 6px; padding: 12px 16px; }
+.banner b { color: var(--warn); }
+.banner-btn { font-weight: 700; background: var(--warn); color: var(--bg); padding: 6px 14px; border-radius: 4px; text-decoration: none; }
+.jobs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+@media (max-width: 600px) { .count { margin-left: 0; width: 100%; } }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+.tabs { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--surface); }
+.tabs button { font: inherit; font-family: var(--display); font-weight: 600; font-size: 1.05rem; letter-spacing: .02em; padding: 8px 16px; border: 0; background: transparent; color: var(--muted); cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--accent); color: var(--bg); }
+.legend { font-size: .85rem; color: var(--muted); max-width: 90ch; }
+.bad { color: var(--warn); }
+[data-only="commuter"], [data-only="bp"] { }
+body[data-view="bp"] [data-only="commuter"], body[data-view="commuter"] [data-only="bp"] { display: none !important; }
+</style>
+</head>
+<body data-view="commuter">
+<div class="wrap">
+  <header>
+    <div class="eyebrow" id="meta">Budapest · Szeged</div>
+    <h1>Commuter House Search</h1>
+    <p class="lede" data-only="commuter">Houses near the station in towns with a fast train to Budapest or Szeged, a train home after a night out, and a short drive.</p>
+    <p class="lede" data-only="bp">Houses in Budapest and its agglomeration, with each house's own door-to-door time to Blaha Lujza tér (Erzsébet körút) by public transport and by car, and how long the trip home takes at night.</p>
+    <div class="tabs" role="tablist" aria-label="Area">
+      <button type="button" role="tab" id="tab-commuter" data-view="commuter" aria-selected="true">Commuter towns</button>
+      <button type="button" role="tab" id="tab-bp" data-view="bp" aria-selected="false">Budapest &amp; agglomeration</button>
+    </div>
+  </header>
+
+  <div class="banner" id="banner" hidden>
+    <div><b><span id="banner-src">A source</span> needs a human check.</b> <span id="banner-msg">The scraper is paused at the check page and waits for you.</span></div>
+    <a class="banner-btn" id="banner-link" href="#" target="_blank" rel="noopener">Open browser view</a>
+  </div>
+
+  <section aria-label="Latest update">
+    <div class="stats" id="stats"></div>
+    <div class="jobs">
+      <span class="flabel">Run now</span>
+      <button type="button" class="reset" data-job="scrape" id="job-scrape">Listing sources</button>
+      <span id="plugin-jobs"></span>
+      <button type="button" class="reset" data-job="grid">Budapest timetables</button>
+      <button type="button" class="reset" data-job="transit" id="job-transit" hidden>Commuter train times</button>
+      <span class="sub" id="job-state"></span>
+    </div>
+    <p class="errors" id="errors" hidden></p>
+  </section>
+
+  <section aria-labelledby="ov-h">
+    <h2 id="ov-h">Towns</h2>
+    <p class="lede" data-only="commuter">Click a town to show only its houses. Yellow chips are the Saturday-night departures from the city.</p>
+    <p class="legend" data-only="bp" id="bp-legend">Click a district or town to show only its houses. Times are medians over the houses listed there.</p>
+    <div class="scroll" data-only="commuter">
+      <table id="towns">
+        <thead><tr><th>Town</th><th class="num">Train fastest / typical</th><th>Night departures (Sat)</th><th>Night (Wed)</th><th class="num">Car</th><th class="num">Houses ≤10 min bike</th><th class="num">New (7 days)</th><th>Status</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="scroll" data-only="bp">
+      <table id="places">
+        <thead><tr><th>District / town</th><th class="num">Houses</th><th class="num">Median price</th><th class="num">Public transport (day)</th><th class="num">Night home (worst wait + trip)</th><th class="num">Car</th><th class="num">New (7 days)</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="ls-h" id="listings">
+    <h2 id="ls-h">Houses</h2>
+    <div class="controls">
+      <div class="field" data-only="commuter"><label for="f-city">Commute to</label>
+        <select id="f-city"><option value="">Budapest or Szeged</option><option value="Budapest">Budapest</option><option value="Szeged">Szeged</option></select></div>
+      <div class="field"><span class="flabel" id="towns-label">Towns</span>
+        <details class="multi" id="f-towns"><summary aria-labelledby="towns-label" id="towns-summary">All towns</summary>
+          <div class="multi-panel"><div class="multi-actions"><button type="button" id="t-all">Select all</button><button type="button" id="t-none">Clear</button></div>
+            <div class="multi-list" id="town-list"></div></div></details></div>
+      <div class="field"><label for="f-new">Listed</label>
+        <select id="f-new"><option value="">Any time</option><option value="1">New today</option><option value="3">Last 3 days</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option></select></div>
+      <div class="field"><label for="f-state">Show</label>
+        <select id="f-state"><option value="active">For sale now</option><option value="drop">Price dropped</option><option value="removed">Removed (last 30 days)</option><option value="all">Everything</option></select></div>
+      <div class="field"><label for="f-max">Max price (M Ft)</label><input id="f-max" type="number" min="0" step="5" placeholder="any"></div>
+      <div class="field"><label for="f-size">Min size (m²)</label><input id="f-size" type="number" min="0" step="10" placeholder="any"></div>
+      <div class="field"><label for="f-plot">Min plot (m²)</label><input id="f-plot" type="number" min="0" step="100" placeholder="any"></div>
+      <div class="field"><label for="f-pt" id="f-pt-label">Max train (min)</label><input id="f-pt" type="number" min="0" step="5" placeholder="any"></div>
+      <div class="field" data-only="bp"><label for="f-night">Max night trip home (min)</label><input id="f-night" type="number" min="0" step="10" placeholder="any"></div>
+      <div class="field"><label for="f-car">Max car (min)</label><input id="f-car" type="number" min="0" step="5" placeholder="any"></div>
+      <div class="field" data-only="commuter"><label for="f-bike">Max bike (min)</label><input id="f-bike" type="number" min="0" step="1" value="10"></div>
+      <div class="field"><label for="f-sort">Sort by</label>
+        <select id="f-sort"><option value="newest">Newest first</option><option value="ppm">Price per m²</option><option value="price">Price (lowest)</option><option value="priceD">Price (highest)</option><option value="drop">Biggest price drop</option><option value="pt">Public transport time</option><option value="night" data-only="bp">Night trip home</option><option value="car">Car time</option><option value="door" data-only="commuter">Bike + train to city</option><option value="bike" data-only="commuter">Bike time</option><option value="size">Size (largest)</option><option value="plot">Plot (largest)</option></select></div>
+      <label class="check"><input id="f-unknown" type="checkbox" checked> <span data-only="commuter">Include houses with unknown location</span><span data-only="bp">Include houses timed from the district/town centre</span></label>
+      <label class="check"><input id="f-reno" type="checkbox"> Hide "needs renovation"</label>
+      <label class="check" data-only="commuter"><input id="f-ok" type="checkbox" checked> Only towns meeting all rules</label>
+      <button class="reset" type="button" id="reset">Reset filters</button>
+      <div class="count" id="count"></div>
+    </div>
+    <div class="scroll">
+      <table id="rows">
+        <thead><tr><th>Town</th><th class="num">Price</th><th class="num">Size</th><th class="num">Rooms</th><th class="num">Plot</th><th class="num">Ft / m²</th>
+          <th class="num" data-only="commuter">Bike to station</th><th class="num" data-only="commuter">Train / car to city</th>
+          <th class="num" data-only="bp">Public transport to centre</th><th class="num" data-only="bp">Night home</th><th class="num" data-only="bp">Car</th>
+          <th>House</th><th>Listed on</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="more"><button id="more" type="button">Show more</button></div>
+  </section>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const M = v => v ? (v / 1e6).toFixed(1) + ' M Ft' : '–';
+const fmt = v => v == null ? '–' : Math.round(v).toLocaleString('hu-HU');
+const med = a => { const v = a.filter(x => x != null).sort((x, y) => x - y); return v.length ? v[Math.floor(v.length / 2)] : null; };
+let SRC = {};   // source name -> label, filled from /api/jobs
+let jobsShown = false;
+const LOC = { exact: 'map pin', street: 'street from address', claude: 'from ad text', area: 'approx. area', town: 'town only', none: 'unknown' };
+const FIELDS = ['#f-city', '#f-new', '#f-state', '#f-max', '#f-size', '#f-plot', '#f-pt', '#f-night', '#f-car', '#f-bike', '#f-sort', '#f-unknown', '#f-reno', '#f-ok'];
+let D, T, today, limit = 100, boxes = [], VIEW = 'commuter', NODATA = false;
+const inView = x => { const t = T[x.town]; return t && (VIEW === 'bp' ? t.bp : t.commuter); };
+
+function daysAgo(iso) { return Math.round((today - new Date(iso + 'T00:00:00')) / 864e5); }
+function store(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+function load(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } }
+function save() {
+  const s = {}; FIELDS.forEach(f => { const e = $(f); s[f] = e.type === 'checkbox' ? e.checked : e.value; });
+  s.towns = boxes.filter(b => b.checked).map(b => b.value);
+  store('hh-filters-' + VIEW, s); store('hh-view', VIEW);
+}
+function restore() {
+  const s = load('hh-filters-' + VIEW);
+  FIELDS.forEach(f => { const e = $(f); if (s && f in s) { e.type === 'checkbox' ? e.checked = s[f] : e.value = s[f]; } else { if (e.type === 'checkbox') e.checked = e.defaultChecked; else e.value = e.tagName === 'SELECT' ? e.options[0].value : e.defaultValue; } });
+  boxes.forEach(b => b.checked = !!(s && (s.towns || []).includes(b.value)));
+}
+
+async function init() {
+  try { D = await fetch('data.json', { cache: 'no-store' }).then(r => r.json()); }
+  catch (e) { D = { towns: [], listings: [] }; NODATA = true; }   // keep the page usable until the first run finishes
+  T = Object.fromEntries(D.towns.map(t => [t.name, t]));
+  today = new Date((D.generated || new Date().toISOString()).slice(0, 10) + 'T00:00:00');
+  $('#meta').textContent = NODATA ? 'No data yet' : `Updated ${new Date(D.generated).toLocaleString('hu-HU')} · commuter train times ${D.transit_checked || '–'} · Budapest timetables ${D.grid ? D.grid.built.slice(0, 10) : 'not built yet'}`;
+  if (D.run && D.run.errors && D.run.errors.length) {
+    $('#errors').hidden = false;
+    $('#errors').textContent = `Last run had ${D.run.errors.length} failed page(s), e.g. ${D.run.errors[0]}. Houses from those pages were kept as they were.`;
+  }
+  if (D.grid) $('#bp-legend').textContent = `Click a district or town to show only its houses. Public transport = door to Blaha Lujza tér on a weekday morning (walk to the best stop included). Night home = the slowest trip from Blaha leaving at any time 00:00–04:00 on a Saturday night, waiting included; over ~150 min means no real night service. Car = free-flow drive. Timetables of ${D.grid.dates.weekday} and ${D.grid.dates.saturday_night}.`;
+  document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
+  $('#stats').addEventListener('click', e => {
+    const b = e.target.closest('button[data-act]'); if (!b) return;
+    const a = b.dataset.act;
+    $('#f-new').value = a === 'new1' ? '1' : a === 'new7' ? '7' : '';
+    $('#f-state').value = a === 'drop' ? 'drop' : a === 'removed' ? 'removed' : 'active';
+    if (a.startsWith('new')) $('#f-sort').value = 'newest';
+    changed(); $('#listings').scrollIntoView();
+  });
+  const pick = name => { boxes.forEach(x => x.checked = x.value === name); $('#f-city').value = ''; changed(); $('#listings').scrollIntoView(); };
+  $('#towns').addEventListener('click', e => { const b = e.target.closest('.town-btn'); if (b) pick(b.dataset.town); });
+  $('#places').addEventListener('click', e => { const b = e.target.closest('.town-btn'); if (b) pick(b.dataset.town); });
+  $('#t-all').addEventListener('click', () => { boxes.forEach(b => { if (!b.parentElement.hidden) b.checked = true; }); changed(); });
+  $('#t-none').addEventListener('click', () => { boxes.forEach(b => b.checked = false); changed(); });
+  $('#town-list').addEventListener('change', changed);
+  document.addEventListener('click', e => { const d = $('#f-towns'); if (d.open && !d.contains(e.target)) d.open = false; });
+  FIELDS.forEach(s => $(s).addEventListener('input', changed));
+  $('#more').addEventListener('click', () => { limit += 200; render(); });
+  $('#reset').addEventListener('click', () => { store('hh-filters-' + VIEW, null); restore(); changed(); });
+  setView(load('hh-view') === 'bp' ? 'bp' : 'commuter');
+}
+
+function setView(v) {
+  VIEW = v; document.body.dataset.view = v;
+  document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === v)));
+  $('#ov-h').textContent = v === 'bp' ? 'Districts and towns' : 'Towns';
+  $('#f-pt-label').textContent = v === 'bp' ? 'Max public transport (min)' : 'Max train (min)';
+  const L = D.listings.filter(inView), act = L.filter(x => x.active);
+  const stat = (n, label, a) => `<div class="stat"><button type="button" data-act="${a}"><b>${n}</b><span>${label}</span></button></div>`;
+  $('#stats').innerHTML = stat(act.length, 'houses for sale', 'all') + stat(act.filter(x => daysAgo(x.first_seen) <= 0).length, 'new today', 'new1') +
+    stat(act.filter(x => daysAgo(x.first_seen) <= 7).length, 'new this week', 'new7') + stat(act.filter(x => x.price_drop > 0).length, 'price dropped', 'drop') +
+    stat(L.filter(x => !x.active).length, 'removed (30 days)', 'removed');
+  const newOf = n => act.filter(x => x.town === n && daysAgo(x.first_seen) <= 7).length;
+  if (v === 'commuter') {
+    const towns = D.towns.filter(t => t.commuter);
+    const nearOf = n => act.filter(x => x.town === n && x.bike != null && x.bike <= 10).length;
+    const chips = a => a && a.length ? '<div class="board">' + a.map(x => `<span class="dep">${x}</span>`).join('') + '</div>' : '–';
+    $('#towns tbody').innerHTML = towns.map(t => `<tr><td><button class="town-btn" type="button" data-town="${esc(t.name)}">${esc(t.name)}</button><span class="city">to ${t.city}</span></td>
+      <td class="num">${t.pt_fastest} / ${t.pt_typical} min</td><td>${chips(t.night_sat)}<span class="sub">longest wait ${t.night_maxgap} min</span></td><td>${chips(t.night_wed)}</td>
+      <td class="num">${t.car_min} min</td><td class="num">${nearOf(t.name)}</td><td class="num">${newOf(t.name) || '–'}</td>
+      <td>${t.meets_all ? '<span class="pill ok">Meets all rules</span>' : '<span class="pill warn">Train just over 1 h</span>'}</td></tr>`).join('');
+    $('#town-list').innerHTML = ['Budapest', 'Szeged'].map(c => `<div class="grp">To ${c}</div>` + towns.filter(t => t.city === c).map(t =>
+      `<label data-city="${c}"><input type="checkbox" value="${esc(t.name)}"> ${esc(t.name)}<small>${nearOf(t.name)}</small></label>`).join('')).join('');
+  } else {
+    const places = D.towns.filter(t => t.bp);
+    const rows = places.map(t => { const h = act.filter(x => x.town === t.name);
+      return { t, n: h.length, price: med(h.map(x => x.price)), pt: med(h.map(x => x.pt)), nw: med(h.map(x => x.nw)), car: med(h.map(x => x.car_bp)), nu: newOf(t.name) }; })
+      .sort((a, b) => (a.t.kind === b.t.kind ? 0 : a.t.kind === 'district' ? -1 : 1) || (a.pt ?? 999) - (b.pt ?? 999));
+    $('#places tbody').innerHTML = rows.map(r => `<tr><td><button class="town-btn" type="button" data-town="${esc(r.t.name)}">${esc(r.t.name)}</button><span class="city">${r.t.kind === 'district' ? 'Budapest district' : 'agglomeration'}</span></td>
+      <td class="num">${r.n || '–'}</td><td class="num">${M(r.price)}</td><td class="num">${r.pt != null ? r.pt + ' min' : '–'}</td>
+      <td class="num${r.nw == null || r.nw > 150 ? ' bad' : ''}">${r.nw != null ? r.nw + ' min' : 'no night service'}</td><td class="num">${r.car != null ? r.car + ' min' : '–'}</td><td class="num">${r.nu || '–'}</td></tr>`).join('');
+    $('#town-list').innerHTML = [['district', 'Budapest districts'], ['agglomeration', 'Agglomeration']].map(([k, label]) => `<div class="grp">${label}</div>` +
+      places.filter(t => t.kind === k).map(t => `<label data-city="${k}"><input type="checkbox" value="${esc(t.name)}"> ${esc(t.name)}<small>${act.filter(x => x.town === t.name).length}</small></label>`).join('')).join('');
+  }
+  boxes = [...$('#town-list').querySelectorAll('input')];
+  restore(); changed();
+}
+
+function changed() {
+  const p = boxes.filter(b => b.checked).map(b => b.value);
+  $('#towns-summary').textContent = !p.length ? (VIEW === 'bp' ? 'All districts & towns' : 'All towns') : p.length <= 2 ? p.join(', ') : `${p.length} selected`;
+  limit = 100; save(); render();
+}
+
+function render() {
+  const n = id => parseFloat($(id).value);
+  const city = VIEW === 'commuter' ? $('#f-city').value : '', sel = new Set(boxes.filter(b => b.checked).map(b => b.value));
+  const newD = n('#f-new'), state = $('#f-state').value, max = n('#f-max'), minS = n('#f-size'), minP = n('#f-plot');
+  const maxPt = n('#f-pt'), maxNight = n('#f-night'), maxCar = n('#f-car'), maxBike = n('#f-bike');
+  const unknown = $('#f-unknown').checked, reno = $('#f-reno').checked, onlyOk = $('#f-ok').checked, sort = $('#f-sort').value;
+  boxes.forEach(b => b.parentElement.hidden = !!city && b.parentElement.dataset.city !== city);
+  const r = D.listings.filter(x => {
+    if (!inView(x)) return false;
+    const t = T[x.town];
+    if (state === 'active' && !x.active) return false;
+    if (state === 'removed' && x.active) return false;
+    if (state === 'drop' && !(x.active && x.price_drop > 0)) return false;
+    if (!(isNaN(newD) || daysAgo(x.first_seen) < newD)) return false;
+    if (!(isNaN(max) || (x.price && x.price <= max * 1e6)) || !(isNaN(minS) || (x.size && x.size >= minS)) || !(isNaN(minP) || (x.plot && x.plot >= minP))) return false;
+    if (reno && x.cond === 'Felújítandó') return false;
+    if (sel.size && !sel.has(x.town)) return false;
+    if (VIEW === 'bp') {
+      if (x.bpx && !unknown) return false;
+      return (isNaN(maxPt) || (x.pt != null && x.pt <= maxPt)) && (isNaN(maxNight) || (x.nw != null && x.nw <= maxNight)) &&
+             (isNaN(maxCar) || (x.car_bp != null && x.car_bp <= maxCar));
+    }
+    const located = x.bike != null && ['exact', 'street', 'claude', 'area'].includes(x.locq);
+    return (!city || t.city === city) && (!onlyOk || sel.size || t.meets_all) &&
+      (isNaN(maxPt) || t.pt_fastest <= maxPt) && (isNaN(maxCar) || t.car_min <= maxCar) &&
+      (located ? (isNaN(maxBike) || x.bike <= maxBike) : unknown);
+  });
+  const ppm = x => x.size && x.price ? x.price / x.size : 1e12;
+  const bp = VIEW === 'bp';
+  const key = { newest: x => -new Date(x.first_seen), ppm, price: x => x.price || 1e12, priceD: x => -(x.price || 0), drop: x => -x.price_drop,
+    pt: x => bp ? (x.pt ?? 999) : T[x.town].pt_fastest, night: x => x.nw ?? 999, car: x => bp ? (x.car_bp ?? 999) : T[x.town].car_min,
+    door: x => T[x.town].pt_fastest + (x.bike ?? 30), bike: x => x.bike ?? 99, size: x => -(x.size || 0), plot: x => -(x.plot || 0) }[sort] || ppm;
+  r.sort((a, b) => key(a) - key(b) || (a.price || 0) - (b.price || 0));
+  $('#count').textContent = `${r.length} houses`;
+  $('#rows tbody').innerHTML = r.slice(0, limit).map(x => {
+    const t = T[x.town], age = daysAgo(x.first_seen);
+    const badges = (x.active ? '' : `<span class="pill gone">Removed ${esc(x.removed_on)}</span>`) +
+      (x.active && age <= 0 ? '<span class="pill new">New today</span>' : x.active && age <= 7 ? `<span class="pill new">New · ${age} d</span>` : '') +
+      (x.price_drop > 0 ? `<span class="pill ok">−${(x.price_drop / 1e6).toFixed(1)} M</span>` : '') +
+      (x.cond === 'Felújítandó' ? '<span class="pill warn">Needs renovation</span>' : '') +
+      (!bp && x.near_text ? '<span class="pill ok">Ad says near station</span>' : '');
+    const weak = !['exact', 'street', 'claude'].includes(x.locq);
+    const bike = x.bike != null ? `~${x.bike} min<span class="loc${weak ? ' weak' : ''}" title="${esc(x.locnote)}">${LOC[x.locq] || x.locq}</span>` : `<span class="loc weak">location unknown</span>`;
+    const where = bp ? (x.bpx ? '<span class="loc weak">from district/town centre</span>' : `<span class="loc${weak ? ' weak' : ''}" title="${esc(x.locnote)}">${LOC[x.locq] || x.locq}</span>`) : '';
+    const links = x.links.map(l => `<a class="${l.a ? '' : 'dead'}" href="${esc(l.u)}" target="_blank" rel="noopener">${SRC[l.s] || l.s}</a>`).join('');
+    const cols = bp
+      ? `<td class="num">${x.pt != null ? x.pt + ' min' : '–'}<span class="loc" title="${esc(x.stop)}">${x.walk != null ? x.walk + ' min walk to stop' : ''}</span>${where}</td>
+         <td class="num${x.nw == null || x.nw > 150 ? ' bad' : ''}">${x.nw != null ? x.nw + ' min' : 'none'}<span class="loc">${x.nt != null ? 'typical ' + x.nt + ' min' : ''}</span></td>
+         <td class="num">${x.car_bp != null ? x.car_bp + ' min' : '–'}</td>`
+      : `<td class="num">${bike}</td><td class="num">${t.pt_fastest} / ${t.car_min} min</td>`;
+    return `<tr class="${x.active ? '' : 'gone'}"><td>${esc(x.town)}<span class="city">${bp ? (t.kind === 'district' ? 'Budapest' : 'agglomeration') : 'to ' + t.city}</span></td>
+      <td class="num">${M(x.price)}${x.price_drop > 0 ? `<span class="drop">was ${M(x.price + x.price_drop)}</span>` : ''}</td>
+      <td class="num">${x.size ? x.size + ' m²' : '–'}</td><td class="num">${x.rooms ?? '–'}</td>
+      <td class="num">${x.plot ? fmt(x.plot) + ' m²' : '–'}</td><td class="num">${x.size && x.price ? fmt(x.price / x.size) : '–'}</td>${cols}
+      <td class="wrapcell"><span class="title">${esc(x.title)}</span>${badges}<span class="sub">${x.agency ? esc(x.agency) + ' · ' : ''}first seen ${esc(x.first_seen)}</span></td>
+      <td class="links">${links}</td></tr>`;
+  }).join('') || (NODATA ? '<tr><td colspan="13" class="empty">No data yet. The first scrape is still running; it can take an hour or two. Refresh this page later.</td></tr>' : '<tr><td colspan="13" class="empty">No houses match these filters. Try a higher limit, more towns, or "Reset filters".</td></tr>');
+  $('#more').hidden = r.length <= limit;
+}
+
+async function poll() {
+  try {
+    const st = await fetch('status.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {});
+    let jobs = { running: [], browser_url: '', plugins: {}, sources: {} };
+    try { jobs = await fetch('api/jobs', { cache: 'no-store' }).then(r => r.json()); } catch (e) {}
+    SRC = { ...(jobs.sources || {}), ...(jobs.plugins || {}) };
+    if (!jobsShown && jobs.plugins) {
+      jobsShown = true;
+      const names = Object.values(jobs.sources || {});
+      if (names.length) $('#job-scrape').textContent = `Listing sources (${names.join(', ')})`;
+      $('#plugin-jobs').innerHTML = Object.entries(jobs.plugins).map(([n, l]) => `<button type="button" class="reset" data-job="${esc(n)}">${esc(l)}</button>`).join(' ');
+      $('#job-transit').hidden = !jobs.mav_planner;
+      if (D && D.listings) render();
+    }
+    // A job plugin that waits for a person writes {state: 'waiting_for_human', since, town} under its name.
+    const [wname, w] = Object.entries(st).find(([, v]) => v && v.state === 'waiting_for_human') || [];
+    $('#banner-link').href = jobs.browser_url || `${location.protocol}//${location.hostname}:6080/vnc.html?autoconnect=1&resize=scale`;
+    $('#banner').hidden = !w;
+    if (w) {
+      $('#banner-src').textContent = SRC[wname] || wname;
+      $('#banner-msg').textContent = `Waiting since ${new Date(w.since).toLocaleString('hu-HU')} at ${w.town || 'a town'}. Open the browser view, complete the check, and it continues by itself.`;
+    }
+    const last = Object.entries(st).filter(([, v]) => v && v.last_run).map(([n, v]) => `${SRC[n] || n} last ran ${new Date(v.last_run).toLocaleString('hu-HU')}`);
+    $('#job-state').textContent = jobs.running.length ? `Running: ${jobs.running.join(', ')}` : last.join(' · ');
+  } catch (e) {}
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-job]'); if (!b) return;
+  let token = ''; try { token = localStorage.getItem('hh-token') || ''; } catch (x) {}
+  let r = await fetch('api/run/' + b.dataset.job, { method: 'POST', headers: { 'X-Token': token } }).catch(() => null);
+  if (r && r.status === 403) {
+    const t = window.prompt('Dashboard token (DASHBOARD_TOKEN)'); if (!t) return;
+    try { localStorage.setItem('hh-token', t); } catch (x) {}
+    r = await fetch('api/run/' + b.dataset.job, { method: 'POST', headers: { 'X-Token': t } }).catch(() => null);
+  }
+  $('#job-state').textContent = !r ? 'Could not reach the server.' : r.status === 202 ? `Started ${b.dataset.job}.` : r.status === 409 ? `${b.dataset.job} is already running.` : `Error ${r.status}.`;
+});
+init(); poll(); setInterval(poll, 20000);
+</script>
+</body>
+</html>

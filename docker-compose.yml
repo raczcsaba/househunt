@@ -1,0 +1,14 @@
+services:
+  househunt:
+    build: .
+    image: househunt:latest
+    container_name: househunt
+    restart: unless-stopped
+    shm_size: "1gb"          # Chromium needs more shared memory than Docker's 64 MB default
+    ports:
+      - "8080:8080"          # dashboard
+      - "6080:6080"          # optional browser view for job plugins (password = VNC_PASSWORD)
+    volumes:
+      - ./data:/data
+    env_file:
+      - .env

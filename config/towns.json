@@ -1,0 +1,1341 @@
+{
+ "transit_checked": "2026-10-16",
+ "towns": [
+  {
+   "name": "Biatorbágy",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Biatorbágy",
+   "mav_code": "005501057",
+   "stations": [
+    [
+     47.4802289,
+     18.8345246
+    ]
+   ],
+   "pt_fastest": 9,
+   "pt_typical": 19,
+   "night_sat": [
+    "00:25",
+    "01:25",
+    "03:10",
+    "04:30"
+   ],
+   "night_maxgap": 105,
+   "night_wed": [
+    "00:25",
+    "03:10",
+    "04:30"
+   ],
+   "car_min": 21,
+   "car_other_min": 121,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Budaörs",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Budaörs",
+   "mav_code": "005501032",
+   "stations": [
+    [
+     47.447547,
+     18.9649545
+    ]
+   ],
+   "pt_fastest": 11,
+   "pt_typical": 17,
+   "night_sat": [
+    "00:25",
+    "01:25",
+    "03:10",
+    "04:30"
+   ],
+   "night_maxgap": 105,
+   "night_wed": [
+    "00:25",
+    "03:10",
+    "04:30"
+   ],
+   "car_min": 14,
+   "car_other_min": 120,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Üröm",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Üröm",
+   "mav_code": "005501412",
+   "stations": [
+    [
+     47.5804,
+     19.0026
+    ]
+   ],
+   "pt_fastest": 11,
+   "pt_typical": 13,
+   "night_sat": [
+    "00:25",
+    "01:25",
+    "02:25",
+    "04:04"
+   ],
+   "night_maxgap": 99,
+   "night_wed": [
+    "00:25",
+    "04:04"
+   ],
+   "car_min": 23,
+   "car_other_min": 131,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Solymár",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Solymár",
+   "mav_code": "005501420",
+   "stations": [
+    [
+     47.5963712,
+     18.9494722
+    ]
+   ],
+   "pt_fastest": 14,
+   "pt_typical": 20,
+   "night_sat": [
+    "00:25",
+    "01:25",
+    "02:25",
+    "04:04"
+   ],
+   "night_maxgap": 99,
+   "night_wed": [
+    "00:25",
+    "04:04"
+   ],
+   "car_min": 26,
+   "car_other_min": 136,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Törökbálint",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Törökbálint",
+   "mav_code": "005540139",
+   "stations": [
+    [
+     47.4507,
+     18.9049
+    ]
+   ],
+   "pt_fastest": 15,
+   "pt_typical": 22,
+   "night_sat": [
+    "00:25",
+    "01:25",
+    "03:10",
+    "04:30"
+   ],
+   "night_maxgap": 105,
+   "night_wed": [
+    "00:25",
+    "03:10",
+    "04:30"
+   ],
+   "car_min": 18,
+   "car_other_min": 117,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Dunakeszi",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Dunakeszi",
+   "mav_code": "005510371",
+   "stations": [
+    [
+     47.6259102,
+     19.1359673
+    ]
+   ],
+   "pt_fastest": 15,
+   "pt_typical": 18,
+   "night_sat": [
+    "00:50",
+    "01:50",
+    "02:50",
+    "03:50"
+   ],
+   "night_maxgap": 60,
+   "night_wed": [
+    "00:50"
+   ],
+   "car_min": 29,
+   "car_other_min": 130,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Fót",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Fót",
+   "mav_code": "005510538",
+   "stations": [
+    [
+     47.6113671,
+     19.1816987
+    ]
+   ],
+   "pt_fastest": 19,
+   "pt_typical": 26,
+   "night_sat": [
+    "00:15",
+    "02:05",
+    "04:00"
+   ],
+   "night_maxgap": 115,
+   "night_wed": [
+    "00:15",
+    "04:00"
+   ],
+   "car_min": 28,
+   "car_other_min": 128,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Tárnok",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Tárnok",
+   "mav_code": "005503160",
+   "stations": [
+    [
+     47.3652962,
+     18.8735221
+    ]
+   ],
+   "pt_fastest": 19,
+   "pt_typical": 22,
+   "night_sat": [
+    "00:20",
+    "01:20",
+    "02:40",
+    "04:05"
+   ],
+   "night_maxgap": 85,
+   "night_wed": [
+    "00:20",
+    "04:05"
+   ],
+   "car_min": 24,
+   "car_other_min": 118,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Bicske",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Bicske",
+   "mav_code": "005501081",
+   "stations": [
+    [
+     47.48431,
+     18.618453
+    ]
+   ],
+   "pt_fastest": 20,
+   "pt_typical": 37,
+   "night_sat": [
+    "00:25",
+    "01:25",
+    "03:10",
+    "04:30"
+   ],
+   "night_maxgap": 105,
+   "night_wed": [
+    "00:25",
+    "03:10",
+    "04:30"
+   ],
+   "car_min": 33,
+   "car_other_min": 133,
+   "pt_other_min": null,
+   "jofogas_county": "fejer"
+  },
+  {
+   "name": "Pilisvörösvár",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Pilisvörösvár",
+   "mav_code": "005501438",
+   "stations": [
+    [
+     47.6147344,
+     18.9012593
+    ]
+   ],
+   "pt_fastest": 21,
+   "pt_typical": 25,
+   "night_sat": [
+    "00:25",
+    "01:25",
+    "02:25",
+    "04:04"
+   ],
+   "night_maxgap": 99,
+   "night_wed": [
+    "00:25",
+    "04:04"
+   ],
+   "car_min": 29,
+   "car_other_min": 137,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Pécel",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Pécel",
+   "mav_code": "005511114",
+   "stations": [
+    [
+     47.4937604,
+     19.3383052
+    ]
+   ],
+   "pt_fastest": 23,
+   "pt_typical": 25,
+   "night_sat": [
+    "00:00",
+    "00:55",
+    "01:55",
+    "04:00"
+   ],
+   "night_maxgap": 125,
+   "night_wed": [
+    "00:00",
+    "00:55",
+    "04:00"
+   ],
+   "car_min": 36,
+   "car_other_min": 113,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Vác",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Vác",
+   "mav_code": "005510447",
+   "stations": [
+    [
+     47.7827191,
+     19.1330097
+    ]
+   ],
+   "pt_fastest": 24,
+   "pt_typical": 40,
+   "night_sat": [
+    "00:15",
+    "00:50",
+    "01:50",
+    "02:05",
+    "02:50",
+    "03:50",
+    "04:00"
+   ],
+   "night_maxgap": 60,
+   "night_wed": [
+    "00:15",
+    "00:50",
+    "01:18",
+    "04:00"
+   ],
+   "car_min": 44,
+   "car_other_min": 144,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Gödöllő",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Gödöllő",
+   "mav_code": "005511130",
+   "stations": [
+    [
+     47.5933379,
+     19.3579443
+    ]
+   ],
+   "pt_fastest": 25,
+   "pt_typical": 29,
+   "night_sat": [
+    "00:00",
+    "00:55",
+    "01:55",
+    "04:00"
+   ],
+   "night_maxgap": 125,
+   "night_wed": [
+    "00:00",
+    "00:55",
+    "04:00"
+   ],
+   "car_min": 39,
+   "car_other_min": 127,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Martonvásár",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Martonvásár",
+   "mav_code": "005503178",
+   "stations": [
+    [
+     47.3205241,
+     18.7809307
+    ]
+   ],
+   "pt_fastest": 25,
+   "pt_typical": 28,
+   "night_sat": [
+    "00:20",
+    "01:20",
+    "02:40",
+    "04:05"
+   ],
+   "night_maxgap": 85,
+   "night_wed": [
+    "00:20",
+    "04:05"
+   ],
+   "car_min": 27,
+   "car_other_min": 125,
+   "pt_other_min": null,
+   "jofogas_county": "fejer"
+  },
+  {
+   "name": "Göd",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Göd",
+   "mav_code": "005510413",
+   "stations": [
+    [
+     47.6879452,
+     19.1375105
+    ]
+   ],
+   "pt_fastest": 26,
+   "pt_typical": 28,
+   "night_sat": [
+    "00:50",
+    "01:50",
+    "02:50",
+    "03:50"
+   ],
+   "night_maxgap": 60,
+   "night_wed": [
+    "00:50",
+    "01:18"
+   ],
+   "car_min": 36,
+   "car_other_min": 137,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Vecsés",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Vecsés",
+   "mav_code": "005513623",
+   "stations": [
+    [
+     47.4086572,
+     19.2560738
+    ]
+   ],
+   "pt_fastest": 28,
+   "pt_typical": 29,
+   "night_sat": [
+    "00:39",
+    "01:39",
+    "02:34",
+    "03:54"
+   ],
+   "night_maxgap": 80,
+   "night_wed": [
+    "00:39",
+    "02:34",
+    "03:54"
+   ],
+   "car_min": 32,
+   "car_other_min": 106,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Tatabánya",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Tatabánya",
+   "mav_code": "005501131",
+   "stations": [
+    [
+     47.5854431,
+     18.3928956
+    ]
+   ],
+   "pt_fastest": 30,
+   "pt_typical": 51,
+   "night_sat": [
+    "00:25",
+    "01:25",
+    "03:10",
+    "04:30"
+   ],
+   "night_maxgap": 105,
+   "night_wed": [
+    "00:25",
+    "03:10",
+    "04:30"
+   ],
+   "car_min": 45,
+   "car_other_min": 146,
+   "pt_other_min": null,
+   "jofogas_county": "komarom-esztergom"
+  },
+  {
+   "name": "Isaszeg",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Isaszeg",
+   "mav_code": "005511122",
+   "stations": [
+    [
+     47.5374207,
+     19.3890045
+    ]
+   ],
+   "pt_fastest": 30,
+   "pt_typical": 32,
+   "night_sat": [
+    "00:00",
+    "00:55",
+    "01:55",
+    "04:00"
+   ],
+   "night_maxgap": 125,
+   "night_wed": [
+    "00:00",
+    "00:55",
+    "04:00"
+   ],
+   "car_min": 45,
+   "car_other_min": 123,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Verőce",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Verőce",
+   "mav_code": "005510454",
+   "stations": [
+    [
+     47.823784,
+     19.031725
+    ]
+   ],
+   "pt_fastest": 31,
+   "pt_typical": 35,
+   "night_sat": [
+    "00:50",
+    "02:50"
+   ],
+   "night_maxgap": 120,
+   "night_wed": [
+    "00:50"
+   ],
+   "car_min": 55,
+   "car_other_min": 155,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Velence",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Velence",
+   "mav_code": "005503210",
+   "stations": [
+    [
+     47.2272,
+     18.6644
+    ]
+   ],
+   "pt_fastest": 33,
+   "pt_typical": 38,
+   "night_sat": [
+    "00:20",
+    "01:20",
+    "02:40",
+    "04:05"
+   ],
+   "night_maxgap": 85,
+   "night_wed": [
+    "00:20",
+    "04:05"
+   ],
+   "car_min": 35,
+   "car_other_min": 132,
+   "pt_other_min": null,
+   "jofogas_county": "fejer"
+  },
+  {
+   "name": "Kápolnásnyék",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Kápolnásnyék",
+   "mav_code": "005503202",
+   "stations": [
+    [
+     47.2456082,
+     18.6930827
+    ]
+   ],
+   "pt_fastest": 33,
+   "pt_typical": 36,
+   "night_sat": [
+    "00:20",
+    "01:20",
+    "02:40",
+    "04:05"
+   ],
+   "night_maxgap": 85,
+   "night_wed": [
+    "00:20",
+    "04:05"
+   ],
+   "car_min": 34,
+   "car_other_min": 132,
+   "pt_other_min": null,
+   "jofogas_county": "fejer"
+  },
+  {
+   "name": "Veresegyház",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Veresegyház",
+   "mav_code": "005510561",
+   "stations": [
+    [
+     47.6490786,
+     19.2887777
+    ]
+   ],
+   "pt_fastest": 34,
+   "pt_typical": 49,
+   "night_sat": [
+    "00:15",
+    "00:20",
+    "01:20",
+    "02:05",
+    "02:50",
+    "04:00"
+   ],
+   "night_maxgap": 70,
+   "night_wed": [
+    "00:15",
+    "00:20",
+    "04:00"
+   ],
+   "car_min": 37,
+   "car_other_min": 130,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Üllő",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Üllő",
+   "mav_code": "005513649",
+   "stations": [
+    [
+     47.3907859,
+     19.3507546
+    ]
+   ],
+   "pt_fastest": 34,
+   "pt_typical": 39,
+   "night_sat": [
+    "00:39",
+    "01:39",
+    "02:34",
+    "03:54"
+   ],
+   "night_maxgap": 80,
+   "night_wed": [
+    "00:39",
+    "02:34",
+    "03:54"
+   ],
+   "car_min": 39,
+   "car_other_min": 102,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Monor",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Monor",
+   "mav_code": "005513664",
+   "stations": [
+    [
+     47.3453975,
+     19.4370172
+    ]
+   ],
+   "pt_fastest": 36,
+   "pt_typical": 46,
+   "night_sat": [
+    "00:39",
+    "01:39",
+    "02:34",
+    "03:54"
+   ],
+   "night_maxgap": 80,
+   "night_wed": [
+    "00:39",
+    "02:34",
+    "03:54"
+   ],
+   "car_min": 45,
+   "car_other_min": 108,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Tata",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Tata",
+   "mav_code": "005501164",
+   "stations": [
+    [
+     47.6639527,
+     18.3278757
+    ]
+   ],
+   "pt_fastest": 38,
+   "pt_typical": 57,
+   "night_sat": [
+    "00:25",
+    "01:25",
+    "03:10",
+    "04:30"
+   ],
+   "night_maxgap": 105,
+   "night_wed": [
+    "00:25",
+    "03:10",
+    "04:30"
+   ],
+   "car_min": 52,
+   "car_other_min": 152,
+   "pt_other_min": null,
+   "jofogas_county": "komarom-esztergom"
+  },
+  {
+   "name": "Erdőkertes",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Erdőkertes",
+   "mav_code": "005510579",
+   "stations": [
+    [
+     47.6623,
+     19.2966
+    ]
+   ],
+   "pt_fastest": 38,
+   "pt_typical": 54,
+   "night_sat": [
+    "00:15",
+    "01:20",
+    "02:05",
+    "02:50",
+    "04:00"
+   ],
+   "night_maxgap": 70,
+   "night_wed": [
+    "00:15",
+    "04:00"
+   ],
+   "car_min": 41,
+   "car_other_min": 133,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Piliscsaba",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Piliscsaba",
+   "mav_code": "005501453",
+   "stations": [
+    [
+     47.6385535,
+     18.8292471
+    ]
+   ],
+   "pt_fastest": 38,
+   "pt_typical": 39,
+   "night_sat": [
+    "00:25",
+    "01:25",
+    "02:25",
+    "04:04"
+   ],
+   "night_maxgap": 99,
+   "night_wed": [
+    "00:25",
+    "04:04"
+   ],
+   "car_min": 39,
+   "car_other_min": 147,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Gárdony",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Gárdony",
+   "mav_code": "005503236",
+   "stations": [
+    [
+     47.2060681,
+     18.6247351
+    ]
+   ],
+   "pt_fastest": 39,
+   "pt_typical": 42,
+   "night_sat": [
+    "00:20",
+    "01:20",
+    "02:40",
+    "04:05"
+   ],
+   "night_maxgap": 85,
+   "night_wed": [
+    "00:20",
+    "04:05"
+   ],
+   "car_min": 44,
+   "car_other_min": 141,
+   "pt_other_min": null,
+   "jofogas_county": "fejer"
+  },
+  {
+   "name": "Nagymaros",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Nagymaros",
+   "mav_code": "005510488",
+   "stations": [
+    [
+     47.7800282,
+     18.9520597
+    ]
+   ],
+   "pt_fastest": 41,
+   "pt_typical": 45,
+   "night_sat": [
+    "00:50",
+    "02:50"
+   ],
+   "night_maxgap": 120,
+   "night_wed": [
+    "00:50"
+   ],
+   "car_min": 62,
+   "car_other_min": 162,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Monorierdő",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Monorierdő",
+   "mav_code": "005541277",
+   "stations": [
+    [
+     47.3084,
+     19.5002
+    ]
+   ],
+   "pt_fastest": 43,
+   "pt_typical": 43,
+   "night_sat": [
+    "00:39",
+    "01:39",
+    "02:34",
+    "03:54"
+   ],
+   "night_maxgap": 85,
+   "night_wed": [
+    "00:39",
+    "02:34",
+    "03:54"
+   ],
+   "car_min": 51,
+   "car_other_min": 101,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Pilis",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Pilis",
+   "mav_code": "005513680",
+   "stations": [
+    [
+     47.2795799,
+     19.5370538
+    ]
+   ],
+   "pt_fastest": 44,
+   "pt_typical": 48,
+   "night_sat": [
+    "00:39",
+    "01:39",
+    "02:34",
+    "03:54"
+   ],
+   "night_maxgap": 85,
+   "night_wed": [
+    "00:39",
+    "02:34",
+    "03:54"
+   ],
+   "car_min": 53,
+   "car_other_min": 97,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Őrbottyán",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Őrbottyán",
+   "mav_code": "005510587",
+   "stations": [
+    [
+     47.6855833,
+     19.2839834
+    ]
+   ],
+   "pt_fastest": 44,
+   "pt_typical": 55,
+   "night_sat": [
+    "00:15",
+    "01:20",
+    "02:05",
+    "02:50",
+    "04:00"
+   ],
+   "night_maxgap": 70,
+   "night_wed": [
+    "00:15",
+    "04:00"
+   ],
+   "car_min": 42,
+   "car_other_min": 135,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Cegléd",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Cegléd",
+   "mav_code": "005513722",
+   "stations": [
+    [
+     47.1824696,
+     19.8074365
+    ]
+   ],
+   "pt_fastest": 45,
+   "pt_typical": 69,
+   "night_sat": [
+    "00:39",
+    "01:39",
+    "02:34",
+    "03:54"
+   ],
+   "night_maxgap": 85,
+   "night_wed": [
+    "00:39",
+    "02:34",
+    "03:54"
+   ],
+   "car_min": 70,
+   "car_other_min": 96,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Székesfehérvár",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Székesfehérvár",
+   "mav_code": "005503269",
+   "stations": [
+    [
+     47.1830169,
+     18.4249947
+    ]
+   ],
+   "pt_fastest": 45,
+   "pt_typical": 47,
+   "night_sat": [
+    "00:20",
+    "01:20",
+    "02:40",
+    "04:05"
+   ],
+   "night_maxgap": 85,
+   "night_wed": [
+    "00:20",
+    "04:05"
+   ],
+   "car_min": 52,
+   "car_other_min": 149,
+   "pt_other_min": null,
+   "jofogas_county": "fejer"
+  },
+  {
+   "name": "Albertirsa",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Albertirsa",
+   "mav_code": "005513698",
+   "stations": [
+    [
+     47.2403404,
+     19.6066508
+    ]
+   ],
+   "pt_fastest": 51,
+   "pt_typical": 57,
+   "night_sat": [
+    "00:39",
+    "01:39",
+    "02:34",
+    "03:54"
+   ],
+   "night_maxgap": 85,
+   "night_wed": [
+    "00:39",
+    "02:34",
+    "03:54"
+   ],
+   "car_min": 57,
+   "car_other_min": 97,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Dorog",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Dorog",
+   "mav_code": "005501495",
+   "stations": [
+    [
+     47.7235693,
+     18.7329246
+    ]
+   ],
+   "pt_fastest": 55,
+   "pt_typical": 55,
+   "night_sat": [
+    "00:25",
+    "01:25",
+    "02:25",
+    "04:04"
+   ],
+   "night_maxgap": 99,
+   "night_wed": [
+    "00:25",
+    "04:04"
+   ],
+   "car_min": 54,
+   "car_other_min": 158,
+   "pt_other_min": null,
+   "jofogas_county": "komarom-esztergom"
+  },
+  {
+   "name": "Ceglédbercel",
+   "city": "Budapest",
+   "meets_all": true,
+   "mav_station": "Ceglédbercel",
+   "mav_code": "005541384",
+   "stations": [
+    [
+     47.2161,
+     19.6571
+    ]
+   ],
+   "pt_fastest": 58,
+   "pt_typical": 61,
+   "night_sat": [
+    "00:39",
+    "01:39",
+    "02:34",
+    "03:54"
+   ],
+   "night_maxgap": 85,
+   "night_wed": [
+    "00:39",
+    "02:34",
+    "03:54"
+   ],
+   "car_min": 60,
+   "car_other_min": 102,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  },
+  {
+   "name": "Hódmezővásárhely",
+   "city": "Szeged",
+   "meets_all": true,
+   "mav_station": "Hódmezővásárhely",
+   "mav_code": "005518572",
+   "stations": [
+    [
+     46.4134792,
+     20.3401153
+    ],
+    [
+     46.4029,
+     20.3116
+    ],
+    [
+     46.4122,
+     20.3177
+    ],
+    [
+     46.4147,
+     20.3193
+    ],
+    [
+     46.4167,
+     20.3286
+    ],
+    [
+     46.4093,
+     20.3158
+    ]
+   ],
+   "pt_fastest": 30,
+   "pt_typical": 59,
+   "night_sat": [
+    "01:05",
+    "02:05",
+    "03:05",
+    "04:17"
+   ],
+   "night_maxgap": 101,
+   "night_wed": [
+    "01:05",
+    "02:05",
+    "03:05",
+    "04:17"
+   ],
+   "car_min": 30,
+   "car_other_min": 131,
+   "pt_other_min": null,
+   "jofogas_county": "csongrad"
+  },
+  {
+   "name": "Algyő",
+   "city": "Szeged",
+   "meets_all": true,
+   "mav_station": "Algyő",
+   "mav_code": "005518549",
+   "stations": [
+    [
+     46.3362865,
+     20.1964154
+    ]
+   ],
+   "pt_fastest": 32,
+   "pt_typical": 34,
+   "night_sat": [
+    "01:05",
+    "02:05",
+    "03:05",
+    "04:17"
+   ],
+   "night_maxgap": 101,
+   "night_wed": [
+    "01:05",
+    "02:05",
+    "03:05",
+    "04:17"
+   ],
+   "car_min": 15,
+   "car_other_min": 116,
+   "pt_other_min": null,
+   "jofogas_county": "csongrad"
+  },
+  {
+   "name": "Komárom",
+   "city": "Budapest",
+   "meets_all": false,
+   "mav_station": "Komárom",
+   "mav_code": "005501222",
+   "stations": [
+    [
+     47.7495823,
+     18.1138895
+    ]
+   ],
+   "pt_fastest": 50,
+   "pt_typical": 81,
+   "night_sat": [
+    "00:25",
+    "01:25",
+    "03:10",
+    "04:30"
+   ],
+   "night_maxgap": 105,
+   "night_wed": [
+    "00:25",
+    "03:10",
+    "04:30"
+   ],
+   "car_min": 64,
+   "car_other_min": 164,
+   "pt_other_min": null,
+   "jofogas_county": "komarom-esztergom"
+  },
+  {
+   "name": "Ács",
+   "city": "Budapest",
+   "meets_all": false,
+   "mav_station": "Ács",
+   "mav_code": "005501230",
+   "stations": [
+    [
+     47.7170332,
+     18.0044256
+    ]
+   ],
+   "pt_fastest": 62,
+   "pt_typical": 95,
+   "night_sat": [
+    "01:25",
+    "03:10",
+    "04:30"
+   ],
+   "night_maxgap": 120,
+   "night_wed": [
+    "03:10",
+    "04:30"
+   ],
+   "car_min": 66,
+   "car_other_min": 167,
+   "pt_other_min": null,
+   "jofogas_county": "komarom-esztergom"
+  },
+  {
+   "name": "Esztergom",
+   "city": "Budapest",
+   "meets_all": false,
+   "mav_station": "Esztergom",
+   "mav_code": "005501511",
+   "stations": [
+    [
+     47.7781762,
+     18.7432699
+    ]
+   ],
+   "pt_fastest": 64,
+   "pt_typical": 65,
+   "night_sat": [
+    "00:25",
+    "01:25",
+    "02:25",
+    "04:04"
+   ],
+   "night_maxgap": 99,
+   "night_wed": [
+    "00:25",
+    "04:04"
+   ],
+   "car_min": 63,
+   "car_other_min": 167,
+   "pt_other_min": null,
+   "jofogas_county": "komarom-esztergom"
+  },
+  {
+   "name": "Abony",
+   "city": "Budapest",
+   "meets_all": false,
+   "mav_station": "Abony",
+   "mav_code": "005513730",
+   "stations": [
+    [
+     47.1732121,
+     20.0174868
+    ]
+   ],
+   "pt_fastest": 73,
+   "pt_typical": 76,
+   "night_sat": [
+    "00:39",
+    "01:39",
+    "02:34",
+    "03:35",
+    "03:54"
+   ],
+   "night_maxgap": 85,
+   "night_wed": [
+    "00:39",
+    "02:34",
+    "03:35",
+    "03:54"
+   ],
+   "car_min": 78,
+   "car_other_min": 108,
+   "pt_other_min": null,
+   "jofogas_county": "pest"
+  }
+ ]
+}
