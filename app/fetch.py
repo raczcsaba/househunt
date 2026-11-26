@@ -26,7 +26,12 @@ ROBOTS_TOKEN = "househunt"
 MIN_DELAY = 1.5
 DEFAULT_DELAY = max(MIN_DELAY, float(os.environ.get("REQUEST_DELAY") or "3"))
 
+# robots.txt is re-read after ROBOTS_TTL seconds (the server process runs for weeks); a robots.txt that could
+# not be read at all is retried after ROBOTS_RETRY seconds instead of blocking the site until a restart.
+ROBOTS_TTL = 12 * 3600
+ROBOTS_RETRY = 15 * 60
 _robots: dict[str, urllib.robotparser.RobotFileParser | None] = {}
+_robots_at: dict[str, float] = {}
 _last_hit: dict[str, float] = {}
 
 # Phrases that mean "a bot check is in the way". Matching one stops the source; we never solve them.
@@ -47,7 +52,8 @@ class FetchFailed(Exception):
 def _robots_for(url):
     p = urllib.parse.urlparse(url)
     root = f"{p.scheme}://{p.netloc}"
-    if root not in _robots:
+    age = time.time() - _robots_at.get(root, 0)
+    if root not in _robots or age > (ROBOTS_TTL if _robots[root] else ROBOTS_RETRY):
         rp = urllib.robotparser.RobotFileParser()
         try:
             req = urllib.request.Request(root + "/robots.txt", headers={"User-Agent": USER_AGENT})
@@ -56,12 +62,16 @@ def _robots_for(url):
         except urllib.error.HTTPError as e:
             if e.code in (401, 403):
                 rp.disallow_all = True          # robots.txt itself refused: treat as "keep out"
+            elif e.code >= 500:                 # server error: unreachable, so fetch nothing (RFC 9309 2.3.1.4)
+                log.warning("robots.txt for %s answered HTTP %s; not fetching from it for now", root, e.code)
+                rp = None
             else:
                 rp.allow_all = True             # no robots.txt: everything allowed
         except Exception as e:
-            log.warning("robots.txt for %s unreadable (%s); not fetching from it this run", root, e)
+            log.warning("robots.txt for %s unreadable (%s); not fetching from it for now", root, e)
             rp = None
         _robots[root] = rp
+        _robots_at[root] = time.time()
     return _robots[root]
 
 
