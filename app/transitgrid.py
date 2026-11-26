@@ -17,13 +17,12 @@ A house's time = walk to the best nearby stop + that stop's time.
 import csv
 import io
 import json
-import math
 import os
 import zipfile
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 
-from .common import haversine_km, http, log
+from .common import haversine_km, log
 
 CENTRE = {"name": "Blaha Lujza tér (Erzsébet körút)", "lat": 47.4967, "lon": 19.0704}
 RADIUS_KM = float(os.environ.get("BP_RADIUS_KM") or 45)
@@ -116,7 +115,7 @@ class Network:
         trips = defaultdict(list)    # trip_id -> [(window index, offset)]
         services = [(_active_services(zf, d), a, b, off) for d, a, b, off in windows]
         for r in _rows(zf, "trips.txt"):
-            for wi, (act, a, b, off) in enumerate(services):
+            for wi, (act, *_) in enumerate(services):
                 if r["service_id"] in act:
                     trips[r["trip_id"]].append(wi)
         n0 = len(self.conns)
@@ -190,7 +189,7 @@ def earliest_arrival(net, sources, t0, horizon=4 * 3600):
     reached = bytearray(net.ntrips)
     for s, w in sources:
         S[s] = min(S[s], t0 + w)
-    for s, w in sources:
+    for s, _ in sources:
         for j, fw in net.foot[s]:
             S[j] = min(S[j], S[s] + fw)
     conns, foot, end = net.conns_dep, net.foot, t0 + horizon
@@ -218,7 +217,7 @@ def latest_departure(net, targets, t_arr, horizon=3 * 3600):
     ok = bytearray(net.ntrips)
     for s, w in targets:
         L[s] = max(L[s], t_arr - w)
-    for s, w in targets:
+    for s, _ in targets:
         for j, fw in net.foot[s]:
             L[j] = max(L[j], L[s] - fw)
     conns, foot, start = net.conns_rev, net.foot, t_arr - horizon
@@ -272,7 +271,7 @@ def build(feed_dir, out_path, rail_items_fn=None):
     per_deadline = []
     for t_arr in ARRIVE_BYS:
         L = latest_departure(net, centre, t_arr)
-        per_deadline.append([(t_arr - l) / 60 if l > -INF else None for l in L])
+        per_deadline.append([(t_arr - dep) / 60 if dep > -INF else None for dep in L])
     day = []
     for i in range(len(net.lat)):
         v = sorted(x[i] for x in per_deadline if x[i] is not None)
@@ -285,7 +284,7 @@ def build(feed_dir, out_path, rail_items_fn=None):
     data = dict(built=datetime.now().isoformat(timespec="seconds"), centre=CENTRE,
                 dates={"weekday": tue.isoformat(), "saturday_night": sat.isoformat()},
                 feeds=sorted(FEEDS) + ([] if "mav" in FEEDS else ["mav-planner"]),
-                night_deps=["%02d:%02d" % ((t // 3600) % 24, (t % 3600) // 60) for t in NIGHT_DEPS],
+                night_deps=[f"{(t // 3600) % 24:02d}:{(t % 3600) // 60:02d}" for t in NIGHT_DEPS],
                 stops=[[round(net.lat[i], 6), round(net.lon[i], 6), net.name[i], day[i], [n[i] for n in night]]
                        for i in keep])
     with open(out_path, "w") as f:
@@ -298,7 +297,8 @@ class Grid:
     """Answers 'how long from this house to the centre' using the saved per-stop times."""
 
     def __init__(self, path):
-        d = json.load(open(path))
+        with open(path) as f:
+            d = json.load(f)
         self.meta = {k: v for k, v in d.items() if k != "stops"}
         self.cell = 0.01
         self.buckets = defaultdict(list)

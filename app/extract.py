@@ -169,7 +169,8 @@ def from_jsonld(html, page_url):
             price = offers.get("price") or (offers.get("priceSpecification") or {}).get("price") or o.get("price")
             geo = obj.get("geo") or o.get("geo") or {}
             raw = {
-                "url": o.get("url") or offers.get("url") or (o.get("@id") if str(o.get("@id", "")).startswith("http") else None),
+                "url": o.get("url") or offers.get("url")
+                or (o.get("@id") if str(o.get("@id", "")).startswith("http") else None),
                 "title": o.get("name") or obj.get("name"), "price": price,
                 "size": obj.get("floorSize") or o.get("floorSize"),
                 "plot": obj.get("lotSize") or o.get("lotSize"),
@@ -246,7 +247,8 @@ def _map(flat):
 
 
 def _embedded_json(html):
-    for m in re.finditer(r'<script[^>]+type=["\']application/(?:json|ld\+json)["\'][^>]*>(.*?)</script>', html, re.S | re.I):
+    scripts = r'<script[^>]+type=["\']application/(?:json|ld\+json)["\'][^>]*>(.*?)</script>'
+    for m in re.finditer(scripts, html, re.S | re.I):
         try:
             yield json.loads(m.group(1))
         except ValueError:
@@ -313,9 +315,11 @@ LLM_SCHEMA = {
         "listings": {"type": "array", "items": {
             "type": "object",
             "properties": {
-                "url": {"type": "string", "description": "Link to the listing's own page, exactly as given in the page."},
+                "url": {"type": "string",
+                        "description": "Link to the listing's own page, exactly as given in the page."},
                 "title": {"type": ["string", "null"]},
-                "price_huf": {"type": ["integer", "null"], "description": "Asking price in forints (45,9 M Ft = 45900000)."},
+                "price_huf": {"type": ["integer", "null"],
+                              "description": "Asking price in forints (45,9 M Ft = 45900000)."},
                 "size_m2": {"type": ["integer", "null"], "description": "Living area."},
                 "plot_m2": {"type": ["integer", "null"], "description": "Plot / land area."},
                 "rooms": {"type": ["number", "null"]},

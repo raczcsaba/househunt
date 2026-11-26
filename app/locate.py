@@ -67,14 +67,18 @@ def street_from_text(*texts):
 SCHEMA = {
     "type": "object",
     "properties": {
-        "street": {"type": ["string", "null"], "description": "Street name with type, e.g. 'Kossuth Lajos utca'. Null if not stated."},
+        "street": {"type": ["string", "null"],
+                   "description": "Street name with type, e.g. 'Kossuth Lajos utca'. Null if not stated."},
         "house_number": {"type": ["string", "null"]},
         "landmarks": {"type": "array", "items": {"type": "string"},
                       "description": "Named places the ad says are close by (school, Tesco, strand, templom...)."},
-        "neighbourhood": {"type": ["string", "null"], "description": "Named part of the town (városrész), e.g. 'Újváros'."},
+        "neighbourhood": {"type": ["string", "null"],
+                          "description": "Named part of the town (városrész), e.g. 'Újváros'."},
         "station_mention": {"type": "string", "enum": ["near", "walking", "far", "none"],
-                            "description": "What the ad says about the railway/HÉV/tram-train station: near (a few minutes), walking (stated walking distance), far, or none."},
-        "station_minutes": {"type": ["integer", "null"], "description": "Minutes to the station if the ad states it (any mode)."},
+                            "description": "What the ad says about the railway/HÉV/tram-train station: near "
+                                           "(a few minutes), walking (stated walking distance), far, or none."},
+        "station_minutes": {"type": ["integer", "null"],
+                            "description": "Minutes to the station if the ad states it (any mode)."},
         "condition": {"type": "string", "enum": ["new", "renovated", "good", "average", "needs_renovation", "unknown"]},
     },
     "required": ["street", "house_number", "landmarks", "neighbourhood", "station_mention",

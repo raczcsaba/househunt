@@ -17,7 +17,7 @@ _CONTACT = (os.environ.get("CONTACT_EMAIL") or "").strip()
 DEFAULT_UA = (os.environ.get("USER_AGENT") or "").strip() or (
     "househunt/2.0 (+https://github.com/raczcsaba/househunt" + (f"; {_CONTACT}" if _CONTACT else "") + ")")
 # Seconds between requests to the same host. Keep this polite.
-DELAY = max(1.5, float((os.environ.get("REQUEST_DELAY") or "3")))
+DELAY = max(1.5, float(os.environ.get("REQUEST_DELAY") or "3"))
 # Per-host overrides (plugins can add entries).
 HOST_DELAY: dict[str, float] = {}
 _last_hit: dict[str, float] = {}

@@ -1,0 +1,52 @@
+# The app runs as `python -m app.main` in Docker and is not published as a package;
+# this file holds project metadata and the pytest/ruff settings.
+[project]
+name = "househunt"
+version = "2.0.0"
+description = "Self-hosted house-hunting dashboard: polite listing scraper with GTFS-based commute times."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Rácz Csaba" }]
+requires-python = ">=3.11"
+dependencies = [
+    "croniter==6.0.0",
+    "anthropic>=1.10,<2",
+    "beautifulsoup4>=4.12",
+]
+
+[project.optional-dependencies]
+browser = ["playwright==1.60.0"]
+
+[project.urls]
+Repository = "https://github.com/raczcsaba/househunt"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra --strict-markers"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+extend-exclude = ["plugins"]
+extend-include = ["plugins/example_site.py"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle
+    "W",
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # bugbear
+    "UP",   # pyupgrade
+    "SIM",  # simplify
+]
+ignore = [
+    "B905",    # zip() without strict=: the zipped sequences are built side by side
+    "SIM105",  # try/except/pass reads fine for parsing loops
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+combine-as-imports = true

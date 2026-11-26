@@ -66,7 +66,8 @@ def night(code, city, d: date):
     inwin = [x for x in deps if w0 <= x <= w1]
     before = [x for x in deps if x < w0]
     after = [x for x in deps if x > w1]
-    seq = [before[-1] if before else w0 - timedelta(hours=1)] + inwin + [after[0] if after else w1 + timedelta(minutes=90)]
+    seq = ([before[-1] if before else w0 - timedelta(hours=1)] + inwin
+           + [after[0] if after else w1 + timedelta(minutes=90)])
     gap = max(int((b - a).total_seconds() // 60) for a, b in zip(seq, seq[1:]))
     return [x.strftime("%H:%M") for x in inwin], gap
 
@@ -82,7 +83,8 @@ def day_times(code, city):
 
 
 def refresh(towns_path_in, towns_path_out):
-    cfg = json.load(open(towns_path_in))
+    with open(towns_path_in) as f:
+        cfg = json.load(f)
     for t in cfg["towns"]:
         city = CITY_CODE[t["city"]]
         try:
@@ -98,4 +100,5 @@ def refresh(towns_path_in, towns_path_out):
         t["meets_all"] = bool(f and f <= 60 and typ <= 75 and gap <= 130 and t["car_min"] <= 90)
         log.info("transit %s: %s/%s min, night %s (gap %s)", t["name"], f, typ, sat, gap)
     cfg["transit_checked"] = date.today().isoformat()
-    json.dump(cfg, open(towns_path_out, "w"), ensure_ascii=False, indent=1)
+    with open(towns_path_out, "w") as f:
+        json.dump(cfg, f, ensure_ascii=False, indent=1)

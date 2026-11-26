@@ -27,7 +27,8 @@ def _car_minutes(con, points):
     for i in range(0, len(todo), 80):
         chunk = todo[i:i + 80]
         coords = ";".join([f"{CENTRE['lon']},{CENTRE['lat']}"] + [f"{lo:.5f},{la:.5f}" for _, la, lo in chunk])
-        url = f"{OSRM}/table/v1/driving/{coords}?sources={';'.join(str(j + 1) for j in range(len(chunk)))}&destinations=0"
+        sources = ";".join(str(j + 1) for j in range(len(chunk)))
+        url = f"{OSRM}/table/v1/driving/{coords}?sources={sources}&destinations=0"
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "househunt-personal/1.0"})
             d = json.load(urllib.request.urlopen(req, timeout=60))

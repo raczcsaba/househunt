@@ -17,9 +17,7 @@ def _same(a, b):
         return False
     if a["rooms"] and b["rooms"] and int(a["rooms"]) != int(b["rooms"]):
         return False
-    if a["plot"] and b["plot"] and abs(a["plot"] - b["plot"]) > 0.05 * max(a["plot"], b["plot"]):
-        return False
-    return True
+    return not (a["plot"] and b["plot"] and abs(a["plot"] - b["plot"]) > 0.05 * max(a["plot"], b["plot"]))
 
 
 def cluster(con):
@@ -76,8 +74,9 @@ def export(con, towns_cfg, out_path, run_info):
             dist=best_loc["dist_km"], bike=best_loc["bike_min"], locq=best_loc["loc_quality"] or "none",
             locnote=best_loc["loc_note"], near_text=any(r["near_station_text"] for r in g),
             first_seen=min(r["first_seen"] for r in g), last_seen=max(r["last_seen"] for r in g),
-            active=any(r["active"] for r in g), removed_on=None if any(r["active"] for r in g) else max(r["removed_on"] or "" for r in g),
-            price_drop=(first_price - main["price"]) if first_price and main["price"] and main["price"] < first_price else 0,
+            active=any(r["active"] for r in g),
+            removed_on=None if any(r["active"] for r in g) else max(r["removed_on"] or "" for r in g),
+            price_drop=(first_price - main["price"]) if first_price and main["price"] < first_price else 0,
             hist=hist, agency=next((r["agency"] for r in g if r["agency"]), None),
             links=sorted([{"s": r["source"], "u": r["url"], "a": bool(r["active"])} for r in g], key=lambda x: x["s"]),
             # Budapest-area travel times (only for Budapest districts and agglomeration towns)

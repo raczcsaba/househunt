@@ -40,13 +40,15 @@ def load_towns():
     """Commuter towns (towns.json) plus Budapest districts and agglomeration (budapest_area.json).
     A town can be both, e.g. Dunakeszi. AREAS=commuter or AREAS=budapest limits the scrape."""
     path = TOWNS_LIVE if os.path.exists(TOWNS_LIVE) else TOWNS_DEFAULT
-    cfg = json.load(open(path))
+    with open(path) as f:
+        cfg = json.load(f)
     areas = {a.strip() for a in (os.environ.get("AREAS") or "commuter,budapest").split(",")}
     by_name = {}
     if "commuter" in areas:
         for t in cfg["towns"]:
             by_name[t["name"]] = dict(t, commuter=True, centre=t["stations"][0])
-    bp = json.load(open(BP_AREA))
+    with open(BP_AREA) as f:
+        bp = json.load(f)
     if "budapest" in areas:
         for p in bp["places"]:
             t = by_name.setdefault(p["name"], {"name": p["name"], "city": "Budapest", "commuter": False})
@@ -117,7 +119,7 @@ def run_once():
             stats["per_source"][sname] = n_src
             # Per-listing detail pages, only for listings we have not opened yet.
             if hasattr(mod, "detail"):
-                cap = int((os.environ.get("MAX_DETAILS_PER_RUN") or "400"))
+                cap = int(os.environ.get("MAX_DETAILS_PER_RUN") or "400")
                 pending = con.execute("SELECT * FROM listings WHERE source=? AND active=1 AND detail_done=0 "
                                       "ORDER BY first_seen DESC LIMIT ?", (sname, cap)).fetchall()
                 log.info("%s: fetching %d detail pages", sname, len(pending))
@@ -146,7 +148,7 @@ def run_once():
 def finish(con, cfg, stats, started):
     """Locate, measure, merge duplicates and publish data.json. Shared by every scraper entry point."""
     towns = {t["name"]: t for t in cfg["towns"]}
-    budget = int((os.environ.get("CLAUDE_MAX_PER_RUN") or "400"))
+    budget = int(os.environ.get("CLAUDE_MAX_PER_RUN") or "400")
     stats["locate"] = locate.locate_pending(con, towns, budget)
     locate.compute_distances(con, towns)
     stats["bp_metrics"] = bpmetrics.update(con, towns, GRID)
@@ -308,7 +310,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 def serve():
     os.makedirs(SITE, exist_ok=True)
     shutil.copy(os.path.join(HERE, "web", "index.html"), os.path.join(SITE, "index.html"))
-    port = int((os.environ.get("PORT") or "8080"))
+    port = int(os.environ.get("PORT") or "8080")
     srv = http.server.ThreadingHTTPServer(("0.0.0.0", port), Handler)
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     log.info("dashboard on http://localhost:%d", port)

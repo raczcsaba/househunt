@@ -52,12 +52,14 @@ def _offers(frm, to, dt):
 
 def _station_list(cache):
     if os.path.exists(cache) and (datetime.now().timestamp() - os.path.getmtime(cache)) < 30 * 86400:
-        return json.load(open(cache))
+        with open(cache) as f:
+            return json.load(f)
     d = http(STATIONS, data={}, headers=HDRS, as_json=True, timeout=180)
     rail = sorted({s["name"]: s["code"] for s in d["stations"]
                    if not s["isAlias"] and s.get("coutryIso") == "HU"
                    and any(m.get("code") == 100 for m in s.get("modalities") or [])}.items())
-    json.dump(rail, open(cache, "w"), ensure_ascii=False)
+    with open(cache, "w") as f:
+        json.dump(rail, f, ensure_ascii=False)
     return rail
 
 
@@ -78,9 +80,11 @@ def _nominatim(name, cache):
             res = []
         rail = [r for r in res or [] if r.get("category") == "railway" and r.get("type") in ("station", "halt", "stop")]
         # Some stations exist in OSM only as the bus stop in front of them ("Vecsés, vasútállomás").
+        def head(r):        # "Vecsés, vasútállomás, ..." -> "Vecsés, vasútállomás"
+            name = r.get("display_name", "")
+            return ",".join(name.split(",")[:2]) if "," in name else ""
         stop = [r for r in res or [] if r.get("type") in ("bus_stop", "platform")
-                and re.search(r"vasútállomás|megállóhely", r.get("display_name", "").split(",")[0] +
-                              "," + r.get("display_name", "").split(",")[1] if "," in r.get("display_name", "") else "", re.I)]
+                and re.search(r"vasútállomás|megállóhely", head(r), re.I)]
         if rail or stop:
             r = (rail or stop)[0]
             hit = [float(r["lat"]), float(r["lon"])]
@@ -99,19 +103,21 @@ def place_stations(net, cache_dir):
             towns.add(nm.split(",")[0].strip())
     cache_path = os.path.join(cache_dir, "rail_station_coords.json")
     try:
-        cache = json.load(open(cache_path))
+        with open(cache_path) as f:
+            cache = json.load(f)
     except (OSError, ValueError):
         cache = {}
     where = {}
     for name, code in _station_list(os.path.join(cache_dir, "mav_stations.json")):
         p = idx.get(_norm(name))
-        if p is None and (name.startswith("Budapest") or any(name == t or name.startswith(t + " ") or name.startswith(t + "-")
-                                                             for t in towns)):
+        in_known_town = any(name == t or name.startswith((t + " ", t + "-")) for t in towns)
+        if p is None and (name.startswith("Budapest") or in_known_town):
             c = _nominatim(name, cache)
             p = (c[0], c[1], name) if c else None
         if p and haversine_km(p[0], p[1], CENTRE["lat"], CENTRE["lon"]) <= RADIUS_KM:
             where[name] = (p[0], p[1], name, code)
-    json.dump(cache, open(cache_path, "w"), ensure_ascii=False)
+    with open(cache_path, "w") as f:
+        json.dump(cache, f, ensure_ascii=False)
     return where
 
 
@@ -121,19 +127,19 @@ def rail_items(weekday: date, saturday: date, net, cache_dir="/data"):
     day0 = datetime.combine(weekday, dtime())
     sat0 = datetime.combine(saturday, dtime())
     items, failed = [], 0
-    for name, (la, lo, _, code) in where.items():
+    for name, (_lat, _lon, _, code) in where.items():
         if name.startswith("Budapest-"):
             continue
         try:
             for h in (5, 7):            # towards Budapest, weekday morning
-                for dep, arr, a, b in _offers(code, BUDAPEST, day0 + timedelta(hours=h)):
+                for dep, arr, _a, b in _offers(code, BUDAPEST, day0 + timedelta(hours=h)):
                     if b in where and arr <= day0 + timedelta(hours=9, minutes=30):
                         items.append((int((dep - day0).total_seconds()), int((arr - day0).total_seconds()),
                                       where[name][:3], where[b][:3]))
             t = sat0 + timedelta(hours=22, minutes=30)   # from Budapest, Saturday night
             for _ in range(4):
                 res = _offers(BUDAPEST, code, t)
-                for dep, arr, a, b in res:
+                for dep, arr, a, _b in res:
                     if a in where:
                         items.append((int((dep - sat0).total_seconds()), int((arr - sat0).total_seconds()),
                                       where[a][:3], where[name][:3]))
