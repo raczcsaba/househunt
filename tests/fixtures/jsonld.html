@@ -1,0 +1,27 @@
+<!doctype html>
+<html><head>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Organization", "name": "Example Realty", "url": "https://www.example.hu/"}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [
+  {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.example.hu/"}]},
+  {"@type": "ItemList", "itemListElement": [
+    {"@type": "ListItem", "position": 1, "item": {
+      "@type": "SingleFamilyResidence", "name": "Családi ház Budaörsön",
+      "url": "/hirdetes/1234567",
+      "floorSize": {"@type": "QuantitativeValue", "value": 120, "unitCode": "MTK"},
+      "lotSize": {"@type": "QuantitativeValue", "value": 650},
+      "numberOfRooms": 4,
+      "address": {"@type": "PostalAddress", "streetAddress": "Kossuth utca 1.", "addressLocality": "Budaörs"},
+      "geo": {"@type": "GeoCoordinates", "latitude": 47.4621, "longitude": 18.9530},
+      "description": "Csendes utca. Érdeklődni: +36 30 123 4567",
+      "offers": {"@type": "Offer", "price": "89900000", "priceCurrency": "HUF"}}},
+    {"@type": "ListItem", "position": 2, "item": {
+      "@type": "Offer", "url": "https://www.example.hu/hirdetes/7654321", "price": "45,9 M Ft",
+      "itemOffered": {"@type": "House", "name": "Felújítandó ház", "floorSize": "75 m²", "numberOfRooms": "2 + 1 fél"}}}
+  ]}
+]}
+</script>
+<script type="application/ld+json">{ this is not json }</script>
+</head><body></body></html>
