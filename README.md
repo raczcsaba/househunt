@@ -1,5 +1,10 @@
 # househunt
 
+[![CI](https://github.com/raczcsaba/househunt/actions/workflows/ci.yml/badge.svg)](https://github.com/raczcsaba/househunt/actions/workflows/ci.yml)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+
 A self-updating list of houses for sale around Budapest, from the property sites **you** choose, with
 what matters when you commute: distance to the station, door-to-door public transport time, the last
 train home on a Saturday night, and driving time.
@@ -21,6 +26,9 @@ train home on a Saturday night, and driving time.
   size, plot, bike, train and car time; "Run now" buttons; optional push messages via ntfy.
 
 Everything runs in one Docker container.
+
+![Dashboard with demo data](docs/screenshot.png)
+<sub>The dashboard, filled with invented demo listings.</sub>
 
 ## Quick start
 
@@ -152,6 +160,45 @@ docker compose exec househunt python -m app.main probe "<url>"  # test a search 
 docker compose exec househunt python -m app.main grid           # rebuild Budapest timetables now
 ```
 
+## Architecture
+
+```mermaid
+flowchart LR
+    S["Sources<br/><sub>sources.toml, SOURCE_URLS, plugins</sub>"] --> F["Fetch<br/><sub>robots.txt, pacing,<br/>block detection</sub>"]
+    F --> E["Extract<br/><sub>JSON-LD, embedded JSON,<br/>CSS selectors, Claude</sub>"]
+    E --> DB[("SQLite<br/><sub>listings, price history</sub>")]
+    DB --> L["Locate<br/><sub>map pin, geocoded street,<br/>Claude, town centre</sub>"]
+    G["GTFS timetables<br/><sub>BKK, Volánbusz, MÁV</sub>"] --> T["Transit grid<br/><sub>Connection Scan Algorithm</sub>"]
+    L --> X["Export<br/><sub>merge duplicates,<br/>travel times</sub>"]
+    T --> X
+    X --> J["data.json"] --> W["Dashboard<br/><sub>static page, port 8080</sub>"]
+```
+
+- **Sources** (`app/sources/`) turn a search URL template into the list of pages to read, one per town and page.
+- **Fetch** (`app/fetch.py`) is the only way configured sources reach the network, so the rules in
+  [Staying within the rules](#staying-within-the-rules) are enforced in one place.
+- **Extract** (`app/extract.py`) is site-independent: it tries structured data first and falls back to
+  selectors or Claude only when needed.
+- **Locate** (`app/locate.py`) improves each listing's position step by step and records how it was found.
+- **Transit grid** (`app/transitgrid.py`) precomputes door-to-centre times for every stop from GTFS once a
+  week, so each house is a quick nearest-stop lookup.
+- **Export** (`app/export.py`) merges the same house across portals (union-find on price, size, rooms and plot)
+  and writes one `data.json`; the dashboard is a single static HTML page that filters it in the browser.
+
+## Development
+
+```bash
+python3.11 -m venv .venv && . .venv/bin/activate     # Python 3.11 or newer
+pip install -r requirements-dev.txt
+pytest                # offline test suite: parsing, extraction, polite fetching, merging
+ruff check .          # lint
+python -m app.main probe "https://www.example.hu/elado-haz/budaors"   # try one search URL
+```
+
+The tests never touch the network: fetching is tested against a local HTTP server, extraction against
+small HTML fixtures in `tests/fixtures/`. CI runs ruff, the tests on Python 3.11 and 3.12, and a Docker build
+on every push.
+
 ## Files
 
 ```
@@ -166,6 +213,7 @@ app/main.py          scheduler, dashboard server, "Run now" API, probe
 app/web/             the dashboard page
 config/              towns, Budapest districts and agglomeration, sources example
 plugins/             your own site plugins (git-ignored)
+tests/               pytest suite and HTML fixtures
 ```
 
 ## License
