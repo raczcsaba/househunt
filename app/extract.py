@@ -22,7 +22,8 @@ FIELDS = ("source_id", "url", "title", "price", "size", "plot", "rooms", "addres
           "description", "condition")
 
 # ---------------------------------------------------------------- value parsing
-PHONE = re.compile(r"(?:\+?36|06)[\s/().-]*\d{1,2}[\s/().-]*\d{3}[\s/.-]*\d{3,4}")
+# +36 30 123 4567, 06-30/123-4567, +36-30-123-45-67, 06 1 234 5678 (not inside longer numbers such as prices)
+PHONE = re.compile(r"(?<!\d)(?:\+?36|06)[\s/().-]*\d{1,2}[\s/().-]*\d{3}[\s/.-]*(?:\d{2}[\s/.-]?\d{2}|\d{3,4})(?!\d)")
 
 
 def clean_text(s):
@@ -34,12 +35,13 @@ def parse_price(v):
     if v is None or isinstance(v, bool):
         return None
     if isinstance(v, (int, float)):
-        return int(v * 1_000_000) if 0 < v < 10_000 else int(v)     # 45.9 meaning millions
-    s = str(v).replace("\xa0", " ").lower()
-    m = re.search(r"(\d[\d .]*(?:,\d+)?)\s*(m(?:illió)?\b|mft|m ft)?", s)
+        return int(round(v * 1_000_000)) if 0 < v < 10_000 else (int(v) or None)     # 45.9 meaning millions
+    s = str(v).replace("\xa0", " ").replace("\u202f", " ").lower()
+    m = re.search(r"(\d[\d .]*(?:,\d+)?)\s*(mrd|milliárd|m(?:illió)?\b|mft|m ft)?", s)
     if not m:
         return None
     num, mult = m.group(1).replace(" ", "").strip("."), m.group(2)
+    scale = 1_000_000_000 if mult in ("mrd", "milliárd") else 1_000_000
     if "," in num:                                   # Hungarian decimal comma: 45,9
         num = num.replace(".", "").replace(",", ".")
     elif re.fullmatch(r"\d+\.\d{1,2}", num) and mult:  # 45.9 M
@@ -50,7 +52,8 @@ def parse_price(v):
         val = float(num)
     except ValueError:
         return None
-    return int(val * 1_000_000) if mult or val < 10_000 else int(val)
+    val = val * scale if mult or val < 10_000 else val
+    return int(round(val)) or None
 
 
 def parse_area(v):
@@ -61,7 +64,11 @@ def parse_area(v):
     if isinstance(v, (int, float)):
         return int(v)
     m = re.search(r"\d[\d\s.]*", str(v).replace("\xa0", " "))
-    return to_int(m.group(0)) if m else None
+    if not m:
+        return None
+    num = m.group(0).strip(" .")
+    dec = re.fullmatch(r"([\d\s]+)\.\d{1,2}", num)   # 95.5 m² is a decimal; 1.200 m² is a thousands separator
+    return to_int(dec.group(1) if dec else num)
 
 
 def parse_rooms(v):
@@ -256,7 +263,7 @@ def _lists(o, depth=0):
     if depth > 12:
         return
     if isinstance(o, list):
-        if len(o) >= 2 and sum(isinstance(x, dict) for x in o) >= 0.8 * len(o):
+        if o and sum(isinstance(x, dict) for x in o) >= 0.8 * len(o):     # one result is still a result
             yield o
         for x in o:
             yield from _lists(x, depth + 1)
