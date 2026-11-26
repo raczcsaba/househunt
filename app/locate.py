@@ -44,8 +44,12 @@ def geocode(con, query: str, town: dict):
     return best
 
 
-STREET_RE = re.compile(r"([A-ZÁÉÍÓÖŐÚÜŰ][\wáéíóöőúüű.\- ]{2,40}?\s(?:utca|út|útja|tér|köz|sor|körút|fasor|dűlő|sétány|park|lakópark|liget))\b(\s*\d+)?",
-                       re.U)
+STREET_TYPES = r"utca|útja|út|u\.|körút|tér|köz|sor|fasor|dűlő|sétány|lakópark|park|liget"
+_CAP = r"[A-ZÁÉÍÓÖŐÚÜŰ][\w.\-]*"
+# A street name is one to four capitalised words (or numbers, "Május 1. utca") before the street type,
+# so "Eladó ház a Kossuth Lajos utca 12" gives "Kossuth Lajos utca 12". A sentence-initial article is skipped.
+STREET_RE = re.compile(rf"\b(?!(?:A|Az|Egy)\s)({_CAP}(?:\s+(?:{_CAP}|\d+\.?)){{0,3}}\s+(?:{STREET_TYPES}))"
+                       r"(?!\w)(\s*\d+)?", re.U)
 
 
 def street_from_text(*texts):
@@ -54,7 +58,8 @@ def street_from_text(*texts):
             continue
         m = STREET_RE.search(t)
         if m:
-            return (m.group(1) + (m.group(2) or "")).strip()
+            street = re.sub(r"\bu\.$", "utca", m.group(1))
+            return (street + (m.group(2) or "")).strip()
     return None
 
 
